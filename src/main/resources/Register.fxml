@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="838.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.LoginController">
+    <children>
+        <AnchorPane fx:id="register_form" layoutX="2.0" layoutY="1.0" prefHeight="500.0" prefWidth="794.0" styleClass="login-bg" stylesheets="@login.css">
+            <children>
+                <AnchorPane layoutX="-48.0" layoutY="-19.0" prefHeight="616.0" prefWidth="458.0" style="-fx-text-fill: #2c6eb5;" stylesheets="@login.css">
+               <children>
+                  <ImageView fitHeight="328.0" fitWidth="242.0" layoutX="123.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../Pictures/hh/user.jpg" />
+                     </image>
+                  </ImageView>
+               </children></AnchorPane>
+                <AnchorPane layoutX="402.0" layoutY="-1.0" prefHeight="600.0" prefWidth="434.0" style="-fx-border-color: #2f6094;">
+                    <children>
+
+                        <Button fx:id="btn_register" layoutX="158.0" layoutY="496.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="39.0" prefWidth="86.0" styleClass="login-button" stylesheets="@login.css" text="Register" textFill="#547fd7">
+                            <font>
+                                <Font name="Berlin Sans FB" size="18.0" />
+                            </font>
+                        </Button>
+                        <Hyperlink fx:id="Link" layoutX="134.0" layoutY="552.0" onAction="#redirectToLoginView" prefHeight="24.0" prefWidth="190.0" styleClass="sign_up" stylesheets="@login.css" text="I am already a member" textFill="#f0f4f2" underline="true">
+                            <font>
+                                <Font name="Microsoft Sans Serif" size="15.0" />
+                            </font>
+                        </Hyperlink>
+                        <Label fx:id="sign_up" layoutX="138.0" layoutY="28.0" styleClass="sign_up" stylesheets="@login.css" text="Sign up" textFill="#e1dce0">
+                            <font>
+                                <Font name="Berlin Sans FB" size="32.0" />
+                            </font>
+                            <effect>
+                                <Bloom />
+                            </effect>
+                        </Label>
+                        <TextField fx:id="email" layoutX="117.0" layoutY="135.0" prefHeight="28.0" prefWidth="168.0" promptText="       email" styleClass="sign_up" stylesheets="@login.css">
+                            <font>
+                                <Font name="Microsoft Sans Serif" size="15.0" />
+                            </font>
+                        </TextField>
+                        <TextField fx:id="phone" layoutX="134.0" layoutY="286.0" prefHeight="28.0" prefWidth="176.0" promptText="        Phone" styleClass="sign_up" stylesheets="@login.css">
+                            <font>
+                                <Font name="Microsoft Sans Serif" size="15.0" />
+                            </font>
+                        </TextField>
+                        <TextField fx:id="username" layoutX="117.0" layoutY="88.0" prefHeight="28.0" prefWidth="168.0" promptText="     Username" styleClass="sign_up" stylesheets="@login.css">
+                            <font>
+                                <Font name="Microsoft Sans Serif" size="13.0" />
+                            </font>
+                        </TextField>
+                        <JFXComboBox fx:id="role" layoutX="125.0" layoutY="447.0" prefHeight="26.0" prefWidth="176.0">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Admin" />
+                                    <String fx:value="Client" />
+                                    <String fx:value="Coach" />
+                                </FXCollections>
+                            </items>
+                        </JFXComboBox>
+                        <PasswordField fx:id="password" layoutX="137.0" layoutY="337.0" prefHeight="28.0" prefWidth="183.0" promptText="  Password" style="-fx-background-color: transparent; -fx-border-color: #2f6094; -fx-border-width: 0px 0px 3px 0px; -fx-padding: 3px 3px 3px 25px; -fx-text-inner-color: #fff;" stylesheets="@login.css">
+                            <font>
+                                <Font name="Microsoft Sans Serif" size="15.0" />
+                            </font>
+                        </PasswordField>
+                        <JFXRadioButton fx:id="male" layoutX="120.0" layoutY="242.0" text="Male" textFill="WHITE">
+                            <unSelectedColor>
+                                <Color red="0.9894737005233765" green="0.9491617679595947" blue="0.9491617679595947" />
+                            </unSelectedColor>
+                            <selectedColor>
+                                <Color red="0.8421052694320679" green="0.8080052137374878" blue="0.7922027111053467" />
+                            </selectedColor>
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </JFXRadioButton>
+                        <Label layoutX="21.0" layoutY="106.0" styleClass="sign_up" stylesheets="@login.css" text="Username" textFill="#7d8933">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="26.0" layoutY="153.0" styleClass="sign_up" stylesheets="@login.css" text="Email" textFill="#e9eae3">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <DatePicker fx:id="birthDatePicker" layoutX="114.0" layoutY="191.0" promptText="Insert a date" />
+                        <Label layoutX="26.0" layoutY="195.0" styleClass="sign_up" stylesheets="@login.css" text="Birthday" textFill="#e9eae3">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="gender" layoutX="30.0" layoutY="242.0" styleClass="sign_up" stylesheets="@login.css" text="Gender" textFill="#e9eae3">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <JFXRadioButton fx:id="female" layoutX="222.0" layoutY="242.0" text="Female" textFill="WHITE">
+                            <unSelectedColor>
+                                <Color red="0.9894737005233765" green="0.9491617679595947" blue="0.9491617679595947" />
+                            </unSelectedColor>
+                            <selectedColor>
+                                <Color red="0.8421052694320679" green="0.8080052137374878" blue="0.7922027111053467" />
+                            </selectedColor>
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </JFXRadioButton>
+                        <Label layoutX="30.0" layoutY="300.0" styleClass="sign_up" stylesheets="@login.css" text="Phone" textFill="#e9eae3">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="30.0" layoutY="351.0" styleClass="sign_up" stylesheets="@login.css" text="Password" textFill="#e9eae3">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="25.0" layoutY="399.0" prefHeight="20.0" prefWidth="94.0" styleClass="sign_up" stylesheets="@login.css" text="ConfirmPass" textFill="#e9eae3">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="31.0" layoutY="463.0" prefHeight="20.0" prefWidth="94.0" styleClass="sign_up" stylesheets="@login.css" text="Role" textFill="#e9eae3">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                  <PasswordField fx:id="confirmPass" layoutX="138.0" layoutY="385.0" prefHeight="28.0" prefWidth="183.0" promptText="confirmPassword" style="-fx-background-color: transparent; -fx-border-color: #2f6094; -fx-border-width: 0px 0px 3px 0px; -fx-padding: 3px 3px 3px 25px; -fx-text-inner-color: #fff;" stylesheets="@login.css">
+                     <font>
+                        <Font name="Microsoft Sans Serif" size="15.0" />
+                     </font>
+                  </PasswordField>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

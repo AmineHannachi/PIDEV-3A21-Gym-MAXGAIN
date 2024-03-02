@@ -14,11 +14,11 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.RéservationController">
-    <AnchorPane layoutY="-10.0" prefHeight="464.0" prefWidth="974.0" BorderPane.alignment="CENTER">
+    <AnchorPane layoutY="-10.0" prefHeight="464.0" prefWidth="974.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
         <children>
             <AnchorPane fx:id="menu_form" layoutX="113.0" layoutY="181.0" prefHeight="600.0" prefWidth="878.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <children>
-                    <AnchorPane layoutX="90.0" layoutY="17.0" prefHeight="504.0" prefWidth="861.0" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="145.0" AnchorPane.topAnchor="17.0">
+                    <AnchorPane layoutX="90.0" layoutY="9.0" prefHeight="454.0" prefWidth="888.0" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="9.0">
                         <styleClass>
                             <String fx:value="white-bg" />
                             <String fx:value="shadow" />
@@ -38,16 +38,23 @@
                     </AnchorPane>
                 </children>
             </AnchorPane>
-            <Label fx:id="nom_ter" layoutX="26.0" layoutY="78.0" prefHeight="21.0" prefWidth="190.0" text="nom terrain" textAlignment="CENTER" textFill="#0369b2">
+            <Label fx:id="nom_ter" layoutX="38.0" layoutY="218.0" prefHeight="21.0" prefWidth="190.0" text="nom terrain" textAlignment="CENTER" textFill="#0369b2">
                 <font>
                     <Font name="Times New Roman" size="25.0" />
                 </font></Label>
-            <Label fx:id="prix_ter" layoutX="53.0" layoutY="122.0" prefHeight="17.0" prefWidth="136.0" text="prix" stylesheets="@mainFormDesign.css"/>
-            <DatePicker fx:id="date" layoutX="265.0" layoutY="80.0" styleClass="date-picker" stylesheets="@mainFormDesign.css" />
+            <Label fx:id="prix_ter" layoutX="295.0" layoutY="219.0" prefHeight="17.0" prefWidth="136.0" stylesheets="@mainFormDesign.css" text="prix">
+            <font>
+               <Font size="17.0" />
+            </font></Label>
+            <DatePicker fx:id="date" layoutX="363.0" layoutY="291.0" promptText="Sélectionner Date" styleClass="date-picker" stylesheets="@mainFormDesign.css" />
             <Button fx:id="button" layoutX="714.0" layoutY="404.0" mnemonicParsing="false" onAction="#Suivant" text="Button" />
-            <TextField fx:id="idUser" layoutX="46.0" layoutY="139.0" visible="false" stylesheets="@mainFormDesign.css" />
-            <ComboBox fx:id="hourComboBox" styleClass="combo-box" stylesheets="@mainFormDesign.css" layoutX="518.0" layoutY="127.0" prefWidth="150.0" />
-            <Label layoutX="46.0" layoutY="40.0" text="Label" />
+            <TextField fx:id="idUser" layoutX="46.0" layoutY="139.0" stylesheets="@mainFormDesign.css" visible="false" />
+            <ComboBox fx:id="hourComboBox" layoutX="607.0" layoutY="290.0" prefHeight="31.0" prefWidth="206.0" promptText="Selectionner Heure" style="-fx-border-color: #514eee; -fx-background-color: #fff;" styleClass="combo-box" stylesheets="@mainFormDesign.css" visibleRowCount="6" />
+         <TextField fx:id="email" layoutX="32.0" layoutY="291.0" prefHeight="29.0" prefWidth="264.0" promptText="Saisir votre Email" style="-fx-border-color: #0598ff; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px0px 0px 2px 0px;">
+            <font>
+               <Font size="13.0" />
+            </font>
+         </TextField>
 
 
         </children>

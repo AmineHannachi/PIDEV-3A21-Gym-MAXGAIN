@@ -17,11 +17,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import tn.esprit.entities.ReservationTerrain;
 import tn.esprit.entities.Terrain;
+import tn.esprit.services.ReservationService;
 import tn.esprit.services.TerrainService;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -31,11 +34,16 @@ public class MainformController implements Initializable {
     private TextField menu_amount;
     @FXML
     private AnchorPane menu_form;
-
+    @FXML
+    private AnchorPane Historique_form;
+    @FXML
+    private Button Historique_reserve;
     @FXML
     private AnchorPane customers_form;
     @FXML
     private GridPane menu_gridPane;
+    @FXML
+    private GridPane historique_gridPane;
     @FXML
     private Button menu_receiptBtn;
     @FXML
@@ -49,8 +57,6 @@ public class MainformController implements Initializable {
 
     @FXML
     private ScrollPane menu_scroll;
-    @FXML
-    private static Label terrainDetailsLabel;
 
     @FXML
     private GridPane detail_gridPane;
@@ -65,6 +71,8 @@ public class MainformController implements Initializable {
         try {
 
             menu_form.setVisible(true);
+            Historique_form.setVisible(false);
+
 
             TerrainService connect = new TerrainService();
             ObservableList<Terrain> terrains = connect.readAll();
@@ -97,17 +105,42 @@ public class MainformController implements Initializable {
         }
 
    }
-    public void afficherPageAccueil() throws IOException {
-        // Charger et afficher la page d'accueil
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("home.fxml"));
-        Parent root = loader.load();
 
-        Stage stage = (Stage) menu_btn.getScene().getWindow(); // Obtient la scène actuelle
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         menu_form.setVisible(false);
+    }
+
+    public void HistoriqueForm(ActionEvent actionEvent) throws IOException {
+        try {
+            menu_form.setVisible(false);
+            Historique_form.setVisible(true);
+            ReservationService connect = new ReservationService();
+            ObservableList<ReservationTerrain> terrainR= connect.readAll2();
+            historique_gridPane.getChildren().clear();
+            int row = 0;
+            int column = 1;
+            for (ReservationTerrain terrain : terrainR) {
+
+                FXMLLoader loader = new FXMLLoader();
+                File fxmlFile = new File("src/main/resources/Historique.fxml");
+                URL url = fxmlFile.toURI().toURL();
+                loader.setLocation(url);
+
+                AnchorPane TerrainPane = loader.load();
+                HistoriqueController controller = loader.getController();
+                controller.setController(this);
+                controller.setTerrainData(terrain);
+                historique_gridPane.add(TerrainPane, column, row);
+                GridPane.setMargin(TerrainPane, new Insets(10));
+                column++;
+                if (column == 3) {
+                    column = 1;
+                    row++;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

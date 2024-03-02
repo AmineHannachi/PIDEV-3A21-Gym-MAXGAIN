@@ -61,11 +61,6 @@ public class HomeTerrainController {
         Ter_Button.setUserData(terrain); // Stocker les données du terrain dans userData
 
     }
-    private HomeTerrainController homeTerrainController;
-
-    public void sethomeController(HomeTerrainController homeTerrainController) {
-        this.homeTerrainController = homeTerrainController;
-    }
     private MainformController mainFormController;
 
     public void setMainFormController(MainformController mainFormController) {

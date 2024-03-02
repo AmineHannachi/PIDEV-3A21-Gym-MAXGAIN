@@ -16,16 +16,19 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import tn.esprit.entities.Terrain;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.web.WebView;
+
 
 public class DetaillTerrainController implements Initializable {
 
-
+    @FXML
+    private WebView mapView;
     @FXML
     private Label Description_terrain;
 
@@ -49,12 +52,14 @@ public class DetaillTerrainController implements Initializable {
     private Terrain terrain;
     @FXML
     private Button Button_Reservation;
+    WebView webView;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+
     }
 
-    public void setdetaillTerrain(Terrain terrain) {
+    public void setdetaillTerrain(Terrain terrain) throws IOException {
         Nom_terrain.setText(terrain.getNom());
         adresse_text.setText(terrain.getAdresse());
 
@@ -63,6 +68,8 @@ public class DetaillTerrainController implements Initializable {
         ImageView_terrain.setImage(image);
         Button_Reservation.setOnAction(this::reserverTerrain);
         Button_Reservation.setUserData(terrain);
+
+
     }
     private MainformController mainFormController;
 
@@ -78,7 +85,7 @@ public class DetaillTerrainController implements Initializable {
 
 
             FXMLLoader loader = new FXMLLoader();
-            File fxmlFile = new File("src/main/resources/reservation2.fxml");
+            File fxmlFile = new File("src/main/resources/reservation.fxml");
             URL url = fxmlFile.toURI().toURL();
             loader.setLocation(url);
             Parent root = loader.load();
@@ -90,13 +97,11 @@ public class DetaillTerrainController implements Initializable {
             controller.setreserverTerrain(terrain);
 
 
-            //Pane menu_gridPane = mainFormController.getDetailPane();
+            Pane menu_gridPane = mainFormController.getDetailPane();
 
-//            menu_gridPane.getChildren().clear();
-//            menu_gridPane.getChildren().add(root);
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+            menu_gridPane.getChildren().clear();
+            menu_gridPane.getChildren().add(root);
+
         }catch (Exception e) {
             e.printStackTrace();
         }

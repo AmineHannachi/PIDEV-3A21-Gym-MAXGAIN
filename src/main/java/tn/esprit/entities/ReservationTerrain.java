@@ -6,7 +6,6 @@ import java.util.Date;
 
 public class ReservationTerrain {
     private int id;
-
     private Date dateR;
     private Time heure;
     private int id_user;

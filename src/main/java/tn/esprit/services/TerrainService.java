@@ -1,7 +1,11 @@
 package tn.esprit.services;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -29,6 +33,36 @@ import tn.esprit.utilis.DataSource;
             conn = DataSource.getInstance().getCnx();
         }
 
+        private static final String API_KEY = "AIzaSyAuOYHXWIDs19k34sT7MfqKiRlU1_b-xfc";
+
+        public String geocodeAddress(String address) throws IOException {
+            // Construire l'URL de requête
+            String urlStr = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=" + API_KEY;
+
+            // Créer une connexion HTTP
+            URL url = new URL(urlStr);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            // Lire la réponse
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
+            StringBuilder response = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // Retourner la réponse
+            return response.toString();
+        }
+
+        public String getMapURL(String address) {
+            // Vous pouvez construire l'URL de la carte en fonction de l'adresse fournie
+            // Par exemple, pour Google Maps :
+            String mapURL = "https://www.google.com/maps?q=" + address;
+            return mapURL;
+        }
         @Override
         public void add(Terrain ter) {
             String redrequete = "insert into Terrain (nom,description,adresse,prix,image) values (?,?,?,?,?)";
@@ -216,7 +250,6 @@ import tn.esprit.utilis.DataSource;
 
         public boolean checkTerrainExist(String t) {
             String req = "select nom from terrain where nom= '" + t + "'";
-            ObservableList<Terrain> obv = FXCollections.observableArrayList();
             try {
                 ste = conn.createStatement();
                 rs = ste.executeQuery(req);

@@ -9,6 +9,8 @@ module tn.esprit {
 
 
     requires java.persistence;
+    requires javafx.web;
+    requires java.mail;
 
     opens tn.esprit.controllers to javafx.fxml;
     opens tn.esprit.entities to javafx.base;

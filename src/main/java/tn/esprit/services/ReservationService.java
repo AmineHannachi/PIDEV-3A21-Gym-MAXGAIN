@@ -50,6 +50,7 @@ public class ReservationService {
                 ResultSet rs = stmt.executeQuery("select * from reservation ");
                 while (rs.next()) {
                     ReservationTerrain rt = new ReservationTerrain();
+                    rt.setId(rs.getInt("id"));
                     rt.setDate(rs.getDate("dateR"));
                     rt.setHeure(rs.getTime("heure"));
                     rt.setId_terrain(rs.getInt("id_terrain"));
@@ -69,7 +70,6 @@ public class ReservationService {
     public boolean checkTerrainExist(int idTerrain, Date selectedDate, Time selectedTime) {
 
         String req = "select id_terrain from reservation where id_terrain= '" + idTerrain + "' AND dateR = '" + selectedDate + "' AND heure='"+ selectedTime+"'";
-        ObservableList<Terrain> obv = FXCollections.observableArrayList();
         try {
             ste = conn.createStatement();
             rs = ste.executeQuery(req);

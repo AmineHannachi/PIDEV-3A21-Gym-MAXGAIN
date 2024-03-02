@@ -87,16 +87,14 @@ and open the template in the editor.
     -fx-background-color: linear-gradient(to bottom right, #0fb565, #399a8f);
 }
 .combo-box {
-    -fx-font-size: 14px;
-    -fx-font-family: "Arial";
-    -fx-text-fill: black;
-    -fx-background-color: white;
-    -fx-border-color: #CCCCCC;
+    -fx-border-radius: 8px;
+    -fx-align-items: center;
+    -fx-cursor: pointer;
+    -fx-font-size: 15px;
+    -fx-font-weight: 200;
+    -fx-font-family:"Century Gothic";
 }
 
-.combo-box .arrow-button {
-    -fx-background-color: #CCCCCC;
-}
 
 /* DatePicker */
 .date-picker {

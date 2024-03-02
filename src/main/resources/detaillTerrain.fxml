@@ -13,12 +13,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane layoutX="113.0" layoutY="181.0" prefHeight="416.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.DetaillTerrainController">
+<AnchorPane layoutX="113.0" layoutY="181.0" prefHeight="461.0" prefWidth="935.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.DetaillTerrainController">
                 <AnchorPane layoutY="-3.0" prefHeight="464.0" prefWidth="974.0" BorderPane.alignment="CENTER">
                     <children>
                         <AnchorPane fx:id="menu_form" layoutX="113.0" layoutY="181.0" prefHeight="600.0" prefWidth="878.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <AnchorPane layoutX="90.0" layoutY="17.0" prefHeight="504.0" prefWidth="861.0" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="145.0" AnchorPane.topAnchor="17.0">
+                                <AnchorPane layoutX="90.0" layoutY="17.0" prefHeight="430.0" prefWidth="880.0" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="17.0">
                                     <styleClass>
                                         <String fx:value="white-bg" />
                                         <String fx:value="shadow" />
@@ -38,27 +38,28 @@
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
-         <Label fx:id="Nom_terrain" layoutX="478.0" layoutY="43.0" prefHeight="32.0" prefWidth="317.0" text="Label" textFill="#2c044d">
+         <Label fx:id="Nom_terrain" layoutX="493.0" layoutY="32.0" prefHeight="32.0" prefWidth="317.0" text="Label" textFill="#2c044d">
             <font>
                <Font size="22.0" />
             </font>
          </Label>
-         <ImageView fx:id="ImageView_terrain" fitHeight="288.0" fitWidth="394.0" layoutX="30.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" />
-         <Text fx:id="text" layoutX="488.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="341.0">
+         <ImageView fx:id="ImageView_terrain" fitHeight="288.0" fitWidth="394.0" layoutX="23.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+         <Text fx:id="text" layoutX="441.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="341.0">
             <font>
                <Font size="16.0" />
             </font>
          </Text>
-         <FontAwesomeIcon glyphName="MAP_MARKER" layoutX="524.0" layoutY="105.0" size="2em" />
-         <Label fx:id="adresse_text" layoutX="553.0" layoutY="86.0" prefHeight="21.0" prefWidth="253.0" text="Label" textFill="#024005">
+         <FontAwesomeIcon glyphName="MAP_MARKER" layoutX="572.0" layoutY="99.0" size="2em" />
+         <Label fx:id="adresse_text" layoutX="600.0" layoutY="80.0" prefHeight="0.0" prefWidth="253.0" text="Label" textFill="#024005">
             <font>
                <Font size="15.0" />
             </font>
          </Label>
-         <Button fx:id="Button_Reservation" layoutX="769.0" layoutY="395.0" mnemonicParsing="false"  onAction="#reserverTerrain" prefHeight="43.0" prefWidth="105.0" styleClass="clear-btn" stylesheets="@dashboardDesign.css" text="Réserver">
+         <Button fx:id="Button_Reservation" layoutX="769.0" layoutY="395.0" mnemonicParsing="false" onAction="#reserverTerrain" prefHeight="43.0" prefWidth="105.0" styleClass="clear-btn" stylesheets="@dashboardDesign.css" text="Réserver">
             <font>
                <Font size="19.0" />
-            </font></Button>
+            </font>
+         </Button>
                     </children>
                 </AnchorPane>
 </AnchorPane>

@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Bloom?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.LoginController">
     <children>
-        <AnchorPane fx:id="login_form" layoutX="-11.0" layoutY="-6.0" prefHeight="606.0" prefWidth="914.0" styleClass="login-bg" stylesheets="@login.css">
+        <AnchorPane fx:id="login_form" layoutX="-7.0" layoutY="-3.0" prefHeight="606.0" prefWidth="914.0" styleClass="login-bg" stylesheets="@login.css">
             <children>
                 <AnchorPane layoutX="480.0" layoutY="3.0" prefHeight="600.0" prefWidth="427.0" style="-fx-border-color: #2f6094;">
                     <children>
-                        <Button fx:id="btn_login" layoutX="109.0" layoutY="422.0" mnemonicParsing="false" onAction="#loginAccount" prefHeight="39.0" prefWidth="145.0" styleClass="login-button" stylesheets="@login.css" text="Login" textFill="#d7deec">
+                        <Button fx:id="btn_login" layoutX="141.0" layoutY="428.0" mnemonicParsing="false" onAction="#loginAccount" prefHeight="30.0" prefWidth="130.0" styleClass="button-91" stylesheets="@login.css" text="Login" textFill="#d7deec">
                             <font>
-                                <Font name="Berlin Sans FB" size="18.0" />
+                                <Font name="Berlin Sans FB" size="20.0" />
                             </font>
                         </Button>
-                        <Hyperlink fx:id="accountLink" layoutX="112.0" layoutY="527.0" onAction="#redirectToRegisterView" text="Don't have an account? " textFill="#f0f4f2" underline="true">
+                        <Hyperlink fx:id="accountLink" layoutX="130.0" layoutY="531.0" onAction="#redirectToRegisterView" text="Don't have an account? " textFill="#f0f4f2" underline="true">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font></Hyperlink>
-                        <Label layoutX="141.0" layoutY="83.0" styleClass="sign_up" stylesheets="@login.css" text="Sign in" textFill="#efdbeb">
+                        <Label layoutX="161.0" layoutY="80.0" styleClass="sign_up" stylesheets="@login.css" text="Sign in" textFill="#efdbeb">
                             <font>
                                 <Font name="Berlin Sans FB" size="32.0" />
                             </font>
@@ -34,33 +33,48 @@
                                 <Bloom />
                             </effect>
                         </Label>
-                        <TextField fx:id="login_username" layoutX="130.0" layoutY="198.0" prefHeight="28.0" prefWidth="168.0" promptText="Username" styleClass="sign_up" stylesheets="@login.css">
+                        <TextField fx:id="login_username" layoutX="144.0" layoutY="198.0" prefHeight="28.0" prefWidth="183.0" promptText="   Username" styleClass="sign_up" stylesheets="@login.css">
                             <font>
-                                <Font name="Microsoft Sans Serif" size="13.0" />
+                                <Font name="Microsoft Sans Serif" size="15.0" />
                             </font>
                         </TextField>
-                        <PasswordField fx:id="login_password" layoutX="122.0" layoutY="276.0" prefHeight="28.0" prefWidth="183.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #2f6094; -fx-border-width: 0px 0px 3px 0px; -fx-padding: 3px 3px 3px 25px; -fx-text-inner-color: #fff;" stylesheets="@login.css">
+                        <PasswordField fx:id="login_password" layoutX="143.0" layoutY="276.0" prefHeight="28.0" prefWidth="183.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #2f6094; -fx-border-width: 0px 0px 3px 0px; -fx-padding: 3px 3px 3px 25px; -fx-text-inner-color: #fff;" stylesheets="@login.css">
                             <font>
                                 <Font name="Microsoft Sans Serif" size="15.0" />
                             </font>
                         </PasswordField>
-                        <Label layoutX="27.0" layoutY="212.0" prefHeight="20.0" prefWidth="76.0" styleClass="sign_up" stylesheets="@login.css" text="Username" textFill="#e9eae3">
+                        <Label layoutX="35.0" layoutY="216.0" prefHeight="20.0" prefWidth="76.0" styleClass="sign_up" stylesheets="@login.css" text="Username" textFill="#e9eae3">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </Label>
-                        <Label layoutX="29.0" layoutY="280.0" styleClass="sign_up" stylesheets="@login.css" text="Password" textFill="#e9eae3">
+                        <Label layoutX="35.0" layoutY="290.0" styleClass="sign_up" stylesheets="@login.css" text="Password" textFill="#e9eae3">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </Label>
+                  <Hyperlink fx:id="pass_forget" layoutX="245.0" layoutY="323.0" onAction="#redirectToPasswordResetView" text="Forget Password" underline="true">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Hyperlink>
+                  <CheckBox fx:id="pass_show" layoutX="93.0" layoutY="326.0" mnemonicParsing="false" onAction="#showPassword" prefHeight="20.0" prefWidth="135.0" text="Show Password" textFill="#e1d2d2">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </CheckBox>
                     </children>
                 </AnchorPane>
-            <ImageView fitHeight="292.0" fitWidth="284.0" layoutX="102.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../Pictures/hh/user.jpg" />
-               </image>
-            </ImageView>
+            <Label fx:id="MG" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="114.0" prefHeight="267.0" prefWidth="446.0" styleClass="MG" stylesheets="@login.css" text=" MG" textFill="#dcd2d2">
+               <font>
+                  <Font name="Engravers MT" size="150.0" />
+               </font>
+            </Label>
+            <Label fx:id="mg" layoutX="165.0" layoutY="341.0" styleClass="MG" stylesheets="@login.css" text="Max-Gain">
+               <font>
+                  <Font name="Bernard MT Condensed" size="48.0" />
+               </font>
+            </Label>
             </children>
         </AnchorPane>
     </children>

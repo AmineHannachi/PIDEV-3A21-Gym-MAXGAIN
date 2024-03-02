@@ -17,11 +17,11 @@ public class ClientService {
         this.userService = new UserService();
         this.conn = DataSource.getInstance().getCnx();
     }
-
-    public void addClient(String username, String email, Date birthdate, String gender, int phone, String password, String confirmPass) {
-        User client = new User(username, email, birthdate, gender, phone, password, confirmPass, Role.CLIENT);
-        userService.add(client);
-    }
+//
+//    public void addClient(String username, String email, Date birthdate, String gender, int phone, String password, String confirmPass) {
+//        User client = new User(username, email, birthdate, gender, phone, password, confirmPass, Role.CLIENT);
+//        userService.add(client);
+//    }
 
 
     public void deleteClient(String username) {
@@ -46,50 +46,50 @@ public class ClientService {
 
 
 
-    public User getClientByUsername(String username) {
-        String query = "SELECT * FROM user WHERE username = ? AND role = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, username);
-            stmt.setString(2, Role.CLIENT.name());
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                String email = rs.getString("email");
-                Date birthdate = rs.getDate("birthdate");
-                String gender = rs.getString("gender");
-                int phone = rs.getInt("phone");
-                String password = rs.getString("password");
-                String confirmPass = rs.getString("confirmPass");
-                return new User(username, email, birthdate, gender, phone, password, confirmPass, Role.CLIENT);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    public User getClientByUsername(String username) {
+//        String query = "SELECT * FROM user WHERE username = ? AND role = ?";
+//        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+//            stmt.setString(1, username);
+//            stmt.setString(2, Role.CLIENT.name());
+//            ResultSet rs = stmt.executeQuery();
+//            if (rs.next()) {
+//                String email = rs.getString("email");
+//                Date birthdate = rs.getDate("birthdate");
+//                String gender = rs.getString("gender");
+//                int phone = rs.getInt("phone");
+//                String password = rs.getString("password");
+//                String confirmPass = rs.getString("confirmPass");
+//                return new User(username, email, birthdate, gender, phone, password, confirmPass, Role.CLIENT);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
 
     // Dans votre service ClientService
-    public ObservableList<User> getAllClients() {
-        ObservableList<User> clients = FXCollections.observableArrayList();
-        String query = "SELECT * FROM user WHERE role = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, Role.CLIENT.name());
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                String username = rs.getString("username");
-                String email = rs.getString("email");
-                Date birthdate = rs.getDate("birthdate");
-                String gender = rs.getString("gender");
-                int phone = rs.getInt("phone");
-                String password = rs.getString("password");
-                String confirmPass = rs.getString("confirmPass");
-                clients.add(new User(username, email, birthdate, gender, phone, password, confirmPass, Role.CLIENT));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return clients;
-    }
+//    public ObservableList<User> getAllClients() {
+//        ObservableList<User> clients = FXCollections.observableArrayList();
+//        String query = "SELECT * FROM user WHERE role = ?";
+//        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+//            stmt.setString(1, Role.CLIENT.name());
+//            ResultSet rs = stmt.executeQuery();
+//            while (rs.next()) {
+//                String username = rs.getString("username");
+//                String email = rs.getString("email");
+//                Date birthdate = rs.getDate("birthdate");
+//                String gender = rs.getString("gender");
+//                int phone = rs.getInt("phone");
+//                String password = rs.getString("password");
+//                String confirmPass = rs.getString("confirmPass");
+//                clients.add(new User(username, email, birthdate, gender, phone, password, confirmPass, Role.CLIENT));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return clients;
+//    }
 
 
 

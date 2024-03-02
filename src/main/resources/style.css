@@ -1,233 +1,93 @@
-.root {
-    -fx-background-color: #EAEEF4;
+.button
+{
+    -fx-background-color : #d3d3d3 ;
+    -fx-text-fill : #e7e5e5;
+}
+.button:hover{
+    -fx-background-color : #10165F;
+}
+.button:pressed
+{
+    -fx-background-color : #1620A1;
 }
 
-
-.side_ankerpane {
-    -fx-background-color: linear-gradient(to bottom right, #141E30, #243B55);
-    -fx-border-width: 2px;
-    -fx-border-color: #004080; /* Couleur de la bordure */
-    -fx-border-style: solid;
-    -fx-padding: 10px; /* Espacement intérieur */
-    -fx-border-radius: 10px; /* Arrondi des bords de la bordure */
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+.scroll-pane {
+    -fx-background-color: #bfc1c2;
 }
-
-.nav-btn {
-    -fx-background-color: transparent;
-    -fx-cursor: hand;
-    -fx-font-family: "Georgia";
-    -fx-font-size: 14px;
-    -fx-text-fill: #fff;
-    -fx-padding: 10px 20px;
-    -fx-background-radius: 5px;
-    -fx-border-radius: 5px;
+/* CSS */
+.button-3 {
+    -fx-background-color: #2ea44f;
+    -fx-border-color: rgba(27, 31, 35, 0.15);
+    -fx-border-radius: 6px;
     -fx-border-width: 1px;
-    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+    -fx-box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;
+    -fx-color: #fff;
+    -fx-cursor: hand;
+    -fx-font-size: 12px; /* Modifier la taille de la police */
+    -fx-font-weight: bold;
+    -fx-padding: 4px 10px; /* Modifier le padding */
 }
-.button-add {
+
+.button-3:hover {
+    -fx-background-color: #2c974b;
+}
+
+.button-3:disabled {
+    -fx-background-color: #94d3a2;
+    -fx-border-color: rgba(27, 31, 35, 0.1);
+    -fx-color: rgba(255, 255, 255, 0.8);
+    -fx-cursor: default;
+}
+
+.button-3:pressed {
+    -fx-background-color: #298e46;
+    -fx-box-shadow: rgba(20, 70, 32, 0.2) 0 1px 0 inset;
+}
+
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+.button-green {
     -fx-background-color: #4CAF50; /* Couleur de fond */
     -fx-text-fill: white; /* Couleur du texte */
     -fx-font-size: 14px; /* Taille de la police */
-    -fx-font-weight: bold; /* Gras */
-    -fx-padding: 8px 16px; /* Espacement entre le texte et les bords du bouton */
-    -fx-border-radius: 5px; /* Rayon des coins */
+    -fx-padding: 10px 20px; /* Espacement intérieur */
+    -fx-border-radius: 5px; /* Rayon de la bordure */
+    -fx-border-width: 2px; /* Épaisseur de la bordure */
+    -fx-border-color: #388E3C; /* Couleur de la bordure */
 }
 
-.button-add:hover {
-    -fx-background-color: #45a049; /* Couleur de fond au survol */
-}
-.button-update {
-    -fx-background-color: #2196F3; /* Couleur de fond */
-    -fx-text-fill: white; /* Couleur du texte */
+.button-round {
+    -fx-background-color: #008000; /* Couleur verte */
+    -fx-text-fill: #FFFFFF; /* Couleur du texte */
     -fx-font-size: 14px; /* Taille de la police */
-    -fx-font-weight: bold; /* Gras */
-    -fx-padding: 8px 16px; /* Espacement entre le texte et les bords du bouton */
-    -fx-border-radius: 5px; /* Rayon des coins */
+    -fx-min-width: 50px; /* Largeur minimale */
+    -fx-min-height: 50px; /* Hauteur minimale */
+    -fx-max-width: 50px; /* Largeur maximale */
+    -fx-max-height: 50px; /* Hauteur maximale */
+    -fx-shape: "M25,25 L25,0 A25,25 0 0,1 50,25 Z"; /* Forme de cercle */
+    -fx-cursor: hand; /* Curseur de type main */
 }
 
-.button-update:hover {
-    -fx-background-color: #1976D2; /* Couleur de fond au survol */
-}
-.button-delete {
-    -fx-background-color: #F44336; /* Couleur de fond */
-    -fx-text-fill: white; /* Couleur du texte */
-    -fx-font-size: 14px; /* Taille de la police */
-    -fx-font-weight: bold; /* Gras */
-    -fx-padding: 8px 16px; /* Espacement entre le texte et les bords du bouton */
-    -fx-border-radius: 5px; /* Rayon des coins */
-}
-
-.button-delete:hover {
-    -fx-background-color: #D32F2F; /* Couleur de fond au survol */
-}
-.button-logout {
-    -fx-background-color: #607D8B; /* Couleur de fond */
-    -fx-text-fill: white; /* Couleur du texte */
-    -fx-font-size: 12px; /* Taille de la police */
-    -fx-font-weight: bold; /* Gras */
-    -fx-padding: 5px 10px; /* Espacement entre le texte et les bords du bouton */
-    -fx-border-radius: 50px; /* Rayon des coins */
-
-}
-
-.button-logout:hover {
-    -fx-background-color: #546E7A; /* Couleur de fond au survol */
-}
-
-
-
-.nav-btn:hover {
-    -fx-background-color: #fff;
-    -fx-text-fill: #000;
-}
-
-.nav-btn:pressed {
-    -fx-background-color: #000;
-    -fx-text-fill: #fff;
-}
-
-.circle-image {
-    -fx-background-radius: 50%;
-    -fx-background-color: white;
-    -fx-border-radius: 50%;
-    -fx-border-color: black;
-    -fx-border-width: 2px;
-}
-
-.inner_pane {
-    -fx-background-color: #26BFE7;
-    -fx-border-width: 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-    -fx-border-style: solid;
-    -fx-border-color: #26BFE7;
-}
-
-.nb_client {
-    -fx-background-color: #87ceeb;
-    -fx-border-width: 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 0 50 50 50;
-}
-
-.nb_client1 {
-    -fx-background-color: #d3d3d3;
-    -fx-border-width: 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 0 50 50 50;
-}
-
-.nb_client2 {
-    -fx-background-color: #d8bfd8;
-    -fx-border-width: 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 0 50 50 50;
-}
-
-.btn_edit {
-    -fx-background-color: #4CAF50;
-    -fx-background-radius: 50em;
-    -fx-min-width: 27px;
-    -fx-min-height: 27px;
-    -fx-max-width: 27px;
-    -fx-max-height: 27px;
-    -fx-padding: 27px;
-    -fx-border-radius: 50em;
-    -fx-border-color: transparent;
-}
-
-.btn_delete {
-    -fx-background-color: #FF5733;
-    -fx-background-radius: 50em;
-    -fx-min-width: 27px;
-    -fx-min-height: 27px;
-    -fx-max-width: 27px;
-    -fx-max-height: 27px;
-    -fx-padding: 20px;
-    -fx-border-radius: 50em;
-    -fx-border-color: transparent;
-}
-
-.button .icon {
-    -fx-fill: white;
-}
-
-.most_inner_pane {
-    -fx-background-color: #6780E2;
-    -fx-border-width: 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-    -fx-border-style: solid;
-    -fx-border-color: #748CF1;
-}
-
-.btn_dashboard {
-    -fx-background-color: #F5F5F5;
-    -fx-border-width: 2px;
-    -fx-border-radius: 50px;
-    -fx-background-radius: 50px;
-    -fx-border-style: solid;
-    -fx-border-color: #F5F5F5;
-}
-
-.btn_workbench11 {
-    -fx-background-color: #353A56;
-    -fx-border-width: 2px;
-    -fx-border-radius: 50px;
-    -fx-background-radius: 50px;
-    -fx-border-style: solid;
-    -fx-border-color: #353A56;
-}
-
-.pane_1 {
-    -fx-background-color: #748CF1;
-    -fx-border-width: 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-    -fx-border-style: solid;
-    -fx-border-color: #748CF1;
-}
-
-.progress {
-    -fx-background-color: #ffffff;
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-style: solid;
-    -fx-border-color: #ffffff;
-}
-
-.pane_11 {
-    -fx-background-color: #ffffff;
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-style: solid;
-    -fx-border-color: #ffffff;
-}
-
-.pane_111 {
-    -fx-background-color: #FD9999;
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-style: solid;
-    -fx-border-color: #FD9999;
-}
-
-.pane_1111 {
-    -fx-background-color: #353A56;
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-style: solid;
-    -fx-border-color: #353A56;
-}
-.dach {
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
     -fx-background-color: linear-gradient(to bottom right, #141E30, #243B55);
+    -fx-background-radius: 5em;
 }
-.image {
-    -fx-alignment: center-left;
-    -fx-content-display: left;
+
+.scroll-pane > .corner {
+    -fx-background-color: #bfc1c2;
 }

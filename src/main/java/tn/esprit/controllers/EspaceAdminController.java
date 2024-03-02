@@ -39,6 +39,7 @@ public class EspaceAdminController implements Initializable {
     private TextField addClientsearch;
     @FXML
     private DatePicker birthdate;
+
     @FXML
     private JFXButton btn_client;
     @FXML
@@ -113,32 +114,32 @@ public class EspaceAdminController implements Initializable {
         colConfirmPass.setCellValueFactory(new PropertyValueFactory<>("confirmPass"));
         colPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
 
-        refreshTableView();
+//        refreshTableView();
     }
 
-    private void refreshTableView() {
-        addClient_tableView.setItems(clientService.getAllClients());
-    }
+//    private void refreshTableView() {
+//        addClient_tableView.setItems(clientService.getAllClients());
+//    }
 
     @FXML
     void addClient(ActionEvent event) {
         String errorMessage = validateFields();
         if (errorMessage != null) {
             alert.errorMessage(errorMessage);
-            return;
+
         }
 
-        LocalDate localDate = birthdate.getValue();
-        if (localDate != null) {
-            Date javaDate = Date.valueOf(localDate);
-            clientService.addClient(username.getText(), email.getText(), javaDate,
-                    male.isSelected() ? "Male" : "Female", Integer.parseInt(phone.getText()),
-                    password.getText(), confirmPass.getText());
-            alert.successMessage("Client added successfully!");
-            refreshTableView();
-        } else {
-            alert.errorMessage("Please select a valid birthdate.");
-        }
+//        LocalDate localDate = birthdate.getValue();
+//        if (localDate != null) {
+//            Date javaDate = Date.valueOf(localDate);
+//            clientService.addClient(username.getText(), email.getText(), javaDate,
+//                    male.isSelected() ? "Male" : "Female", Integer.parseInt(phone.getText()),
+//                    password.getText(), confirmPass.getText());
+//            alert.successMessage("Client added successfully!");
+//            refreshTableView();
+//        } else {
+//            alert.errorMessage("Please select a valid birthdate.");
+//        }
     }
 
     private String validateFields() {
@@ -238,25 +239,25 @@ public class EspaceAdminController implements Initializable {
             String message = "Are you sure you want to delete the client " + selectedClient.getUsername() + " ?";
             if (alert.confirmMessage(message)) {
                 clientService.deleteClient(selectedClient.getUsername());
-                refreshTableView();
+//                refreshTableView();
                 alert.successMessage("Client deleted successfully !");
             }
         } else {
             alert.errorMessage("No client selected !");
         }
     }
-
-    @FXML
-    void searchClient(ActionEvent event) {
-        String username = addClientsearch.getText();
-        User client = clientService.getClientByUsername(username);
-        if (client != null) {
-            displaySelectedUserDetails(client);
-        } else {
-            clearFields();
-            alert.errorMessage("No client found with username: " + username);
-        }
-    }
+//
+//    @FXML
+//    void searchClient(ActionEvent event) {
+//        String username = addClientsearch.getText();
+//        User client = clientService.getClientByUsername(username);
+//        if (client != null) {
+//            displaySelectedUserDetails(client);
+//        } else {
+//            clearFields();
+//            alert.errorMessage("No client found with username: " + username);
+//        }
+//    }
 
     @FXML
     void updateClient(ActionEvent event) {
@@ -285,7 +286,7 @@ public class EspaceAdminController implements Initializable {
                         newGender, newPhone, newPassword, newConfirmPass);
 
                 alert.successMessage("Client information updated successfully !");
-                refreshTableView();
+//                refreshTableView();
             }
         } else {
             alert.errorMessage("No client selected !");
@@ -293,18 +294,6 @@ public class EspaceAdminController implements Initializable {
     }
 
 
-    @FXML
-    public void logout(ActionEvent event) {
-        try {
-            Parent parent = FXMLLoader.load(getClass().getResource("/Login.fxml"));
-            Scene scene = new Scene(parent);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
 
     private void clearFields() {
         username.clear();

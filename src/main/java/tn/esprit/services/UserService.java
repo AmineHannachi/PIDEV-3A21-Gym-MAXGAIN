@@ -2,6 +2,7 @@ package tn.esprit.services;
 
 import tn.esprit.entities.Role;
 import tn.esprit.entities.User;
+import tn.esprit.repositories.IService;
 import tn.esprit.utilis.DataSource;
 
 import java.sql.*;
@@ -32,8 +33,27 @@ public class UserService implements IService<User> {
         }
     }
 
+    @Override
+    public void delete(User user) {
+
+    }
 
     @Override
+    public void update(User user) {
+
+    }
+
+    @Override
+    public User recherche(String id) {
+        return null;
+    }
+
+    @Override
+    public List<User> readAll() {
+        return null;
+    }
+
+
     public void delete(String username) {
         String query = "DELETE FROM user WHERE username = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -66,77 +86,77 @@ public class UserService implements IService<User> {
         }
     }
 
-    public User getUserById(int id) {
-        String query = "SELECT * FROM user WHERE id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                String username = rs.getString("username");
-                String email = rs.getString("email");
-                Date birthdate = rs.getDate("birthdate");
-                String gender = rs.getString("gender");
-                int phone = rs.getInt("phone");
-                String password = rs.getString("password");
-                String confirmPass = rs.getString("confirmPass");
-                Role role = Role.valueOf(rs.getString("role"));
-                return new User( username, email, birthdate, gender, phone, password, confirmPass, role);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    public User getUserById(int id) {
+//        String query = "SELECT * FROM user WHERE id = ?";
+//        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+//            stmt.setInt(1, id);
+//            ResultSet rs = stmt.executeQuery();
+//            if (rs.next()) {
+//                String username = rs.getString("username");
+//                String email = rs.getString("email");
+//                Date birthdate = rs.getDate("birthdate");
+//                String gender = rs.getString("gender");
+//                int phone = rs.getInt("phone");
+//                String password = rs.getString("password");
+//                String confirmPass = rs.getString("confirmPass");
+//                Role role = Role.valueOf(rs.getString("role"));
+//                return new User( username, email, birthdate, gender, phone, password, confirmPass, role);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
-    public User getUserByUsername(String username) {
-        String query = "SELECT * FROM user WHERE username = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                int id = rs.getInt("id");
-                String email = rs.getString("email");
-                Date birthdate = rs.getDate("birthdate");
-                String gender = rs.getString("gender");
-                int phone = rs.getInt("phone");
-                String password = rs.getString("password");
-                String confirmPass = rs.getString("confirmPass");
-                Role role = Role.valueOf(rs.getString("role"));
-                return new User(username, email, birthdate, gender, phone, password, confirmPass, role);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    public User getUserByUsername(String username) {
+//        String query = "SELECT * FROM user WHERE username = ?";
+//        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+//            stmt.setString(1, username);
+//            ResultSet rs = stmt.executeQuery();
+//            if (rs.next()) {
+//                int id = rs.getInt("id");
+//                String email = rs.getString("email");
+//                Date birthdate = rs.getDate("birthdate");
+//                String gender = rs.getString("gender");
+//                int phone = rs.getInt("phone");
+//                String password = rs.getString("password");
+//                String confirmPass = rs.getString("confirmPass");
+//                Role role = Role.valueOf(rs.getString("role"));
+//                return new User(username, email, birthdate, gender, phone, password, confirmPass, role);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
-    @Override
+
     public void recherche(User user) {
         // Ajoutez la logique de recherche ici
     }
 
-    @Override
-    public List<User> readAll() {
-        String query = "SELECT * FROM user";
-        List<User> list = new ArrayList<>();
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                String username = rs.getString("username");
-                String email = rs.getString("email");
-                Date birthdate = rs.getDate("birthdate");
-                String gendre = rs.getString("gender");
-                String password = rs.getString("password");
-                String confirmPass = rs.getString("confirmPass");
-                int phone = rs.getInt("phone");
-                Role role = Role.valueOf(rs.getString("role"));
-                list.add(new User(username,email, birthdate,  gendre,phone, password, confirmPass, role));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+//    @Override
+//    public List<User> readAll() {
+//        String query = "SELECT * FROM user";
+//        List<User> list = new ArrayList<>();
+//        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+//            ResultSet rs = stmt.executeQuery();
+//            while (rs.next()) {
+//                String username = rs.getString("username");
+//                String email = rs.getString("email");
+//                Date birthdate = rs.getDate("birthdate");
+//                String gendre = rs.getString("gender");
+//                String password = rs.getString("password");
+//                String confirmPass = rs.getString("confirmPass");
+//                int phone = rs.getInt("phone");
+//                Role role = Role.valueOf(rs.getString("role"));
+//                list.add(new User(username,email, birthdate,  gendre,phone, password, confirmPass, role));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return list;
+//    }
 
 
 }

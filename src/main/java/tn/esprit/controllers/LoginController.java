@@ -9,12 +9,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import tn.esprit.entities.Role;
+import tn.esprit.services.PasswordHashing;
 import tn.esprit.utilis.DataSource;
-
+import tn.esprit.services.PasswordHashing;
+import tn.esprit.repositories.UserRepository;
+import tn.esprit.entities.User;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -26,6 +33,8 @@ public class LoginController implements Initializable {
 
     @FXML
     private PasswordField login_password;
+    @FXML
+    private Hyperlink pass_forget;
 
     @FXML
     private Button btn_login;
@@ -65,18 +74,66 @@ public class LoginController implements Initializable {
 
     @FXML
     private DatePicker birthDatePicker;
+    @FXML
+    private CheckBox pass_show;
 
     private AlertMessage alert = new AlertMessage();
-
+    @FXML
+    private Label MG;
+    @FXML
+    private Label mg;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Appliquer l'effet DropShadow à MG lors de l'initialisation
+        DropShadow shadow = new DropShadow(20, Color.valueOf("#509dea"));
+        MG.setEffect(shadow);
+
+        // Définir le comportement lorsque la souris entre dans le nœud MG
+        MG.setOnMouseEntered(event -> {
+            if (event.getSource() == MG) {
+                DropShadow shadow1 =new DropShadow(40,Color.valueOf("#509dea"));
+                shadow1.setRadius(50);
+                MG.setEffect(shadow1);
+                MG.setStyle("-fx-text-fill: #509dea");
+            }
+        });
+        MG.setOnMouseExited(event -> {
+        if (event.getSource() == MG) {
+            DropShadow shadow1 = new DropShadow(30, Color.valueOf("#509dea"));
+            shadow1.setRadius(20);
+            MG.setEffect(shadow1);
+            MG.setStyle("-fx-text-fill: #141E30");
+        }});
+        DropShadow shadow2 = new DropShadow(20, Color.valueOf("#509dea"));
+        mg.setEffect(shadow2);
+
+        // Définir le comportement lorsque la souris entre dans le nœud MG
+        mg.setOnMouseEntered(event -> {
+            if (event.getSource() == mg) {
+                DropShadow shadow1 =new DropShadow(40,Color.valueOf("#509dea"));
+                shadow1.setRadius(50);
+                mg.setEffect(shadow1);
+                mg.setStyle("-fx-text-fill: #509dea");
+            }
+        });
+        mg.setOnMouseExited(event -> {
+            if (event.getSource() == mg) {
+                DropShadow shadow1 = new DropShadow(30, Color.valueOf("#509dea"));
+                shadow1.setRadius(20);
+                mg.setEffect(shadow1);
+                mg.setStyle("-fx-text-fill: #141E30");
+            }});
+        // Vérifier si role n'est pas null avant de le configurer
         if (role != null) {
             role.setItems(FXCollections.observableArrayList(Role.values()));
         }
-        if ( birthDatePicker != null) {
+
+        // Vérifier si birthDatePicker n'est pas null avant de le configurer
+        if (birthDatePicker != null) {
             birthDatePicker.setValue(LocalDate.now().minusYears(18));
         }
     }
+
 
     @FXML
     public void loginAccount() {
@@ -159,23 +216,30 @@ public class LoginController implements Initializable {
 
         try {
             Connection connect = DataSource.getInstance().getCnx();
-            String insertData = "INSERT INTO user (username, password, email, phone, gender, birthdate, role) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String insertData = "INSERT INTO user (username, password, email, phone, gender, birthdate, role, salt) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement prepare = connect.prepareStatement(insertData);
             prepare.setString(1, username.getText());
-            prepare.setString(2, password.getText());
+
+            // Générer le sel
+            byte[] salt = PasswordHashing.generateSalt();
+
+            // Hasher le mot de passe avant de le stocker
+            String hashedPassword = PasswordHashing.hashPassword(password.getText(), salt);
+            prepare.setString(2, hashedPassword);
+
             prepare.setString(3, email.getText());
             prepare.setString(4, phone.getText());
             prepare.setString(5, male.isSelected() ? "Male" : "Female");
             prepare.setDate(6, java.sql.Date.valueOf(birthDatePicker.getValue()));
             prepare.setString(7, role.getValue().toString());
+            prepare.setBytes(8, salt); // Enregistrer le sel dans la base de données
             prepare.executeUpdate();
             alert.successMessage("Registered successfully!");
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException e) {
             e.printStackTrace();
             alert.errorMessage("Registration failed. Please try again later.");
         }
     }
-
     private String validateFields() {
         StringBuilder errorMessage = new StringBuilder();
 
@@ -240,6 +304,19 @@ public class LoginController implements Initializable {
         }
         return userExists;
     }
+    @FXML
+    public void showPassword() {
+        if (pass_show.isSelected()) {
+            // Afficher le mot de passe
+            login_password.setPromptText(login_password.getText());
+            login_password.setText("");
+        } else {
+            // Masquer le mot de passe
+            login_password.setText(login_password.getPromptText());
+            login_password.setPromptText("");
+        }
+    }
+
 
     @FXML
     public void redirectToRegisterView() {
@@ -259,6 +336,17 @@ public class LoginController implements Initializable {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
             Stage stage = (Stage) Link.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void redirectToPasswordResetView() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/PasswordReset.fxml"));
+            Stage stage = (Stage)pass_forget.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
         } catch (IOException e) {

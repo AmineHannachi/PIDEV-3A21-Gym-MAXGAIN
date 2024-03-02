@@ -8,13 +8,30 @@
     -fx-border-width: 0px 0px 3px 0px;
 }
 
-.login-button {
-    -fx-background-color: transparent;
-    -fx-shape: "M 0 0 Q 0 50 50 50 L 0 50 Z";
-    -fx-background-radius: 0;
-    -fx-border-radius: 0;
+/* JavaFX CSS */
+.button-91 {
+    -fx-text-fill: #fff;
+    -fx-padding: 15px 25px;
+    -fx-background-color:#2f6094;
+    -fx-background-radius: 14px;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-border-width: 0;
+    -fx-border-radius: 16px;
     -fx-cursor: hand;
-    -fx-text-fill: white;
+    -fx-effect: inset -3px -3px 9px rgba(255, 255, 255, 0.25), inset 0px 3px 9px rgba(255, 255, 255, 0.3), inset 0px 1px 1px rgba(255, 255, 255, 0.6), inset 0px -8px 36px rgba(0, 0, 0, 0.3), inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px rgba(0, 0, 0, 0.2);
+}
+
+.button-91:hover {
+    -fx-background-color: #2f6094; /* Couleur de survol */
+}
+
+.button-91:pressed {
+    -fx-background-color: #2f6094; /* Couleur lorsqu'appuyé */
+}
+
+.button-91:disabled {
+    -fx-opacity: 0.5; /* Opacité pour désactivé */
 }
 
 .simple-button {
@@ -31,4 +48,9 @@
 }
 .sign_up {
     -fx-text-fill: white;
+}
+.MG{
+    -fx-text-fill: #141E30 ;
+    -fx-cursor: hand;
+
 }

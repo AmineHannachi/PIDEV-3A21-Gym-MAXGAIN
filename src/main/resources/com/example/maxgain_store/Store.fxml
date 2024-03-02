@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="1600" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000" prefWidth="939.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane fx:id="topPane" layoutY="-2.0" prefHeight="77.0" prefWidth="1600"  style="-fx-background-color: linear-gradient(from 0% 100% to 0% -80%,  #00165B, white);">
+         <children>
+            <ImageView fitHeight="85.0" fitWidth="82.0" layoutX="14.0" layoutY="-4.0">
+               <image>
+                  <Image url="@assets/logo.png"/>
+               </image>
+            </ImageView>
+            <ImageView fitHeight="62.0" fitWidth="61.0" layoutX="1530" layoutY="4.0">
+               <image>
+                  <Image url="@assets/cart.png"/>
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <HBox layoutX="2.0" layoutY="75.0" prefHeight="1000" prefWidth="1600">
+         <children>
+            <Pane prefHeight="1000.0" prefWidth="400.0" />
+            <ScrollPane fx:id="scroll" prefHeight="1000" prefWidth="1200">
+            </ScrollPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

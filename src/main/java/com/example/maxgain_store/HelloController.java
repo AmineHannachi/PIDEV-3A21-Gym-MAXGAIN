@@ -103,7 +103,7 @@ public class HelloController implements Initializable {
         logo.setFitWidth(70);
         logo.setFitHeight(70);
         logo.setX(20);
-        logo.setImage(new Image("C:\\Users\\anene\\IdeaProjects\\MaxGain_Store\\src\\main\\java\\com\\example\\maxgain_store\\assets\\logo.png"));
+        logo.setImage(new Image("C:\\Users\\anene\\IdeaProjects\\PIDEV-3A21-Gym-MAXGAIN\\src\\main\\java\\com\\example\\maxgain_store\\assets\\logo.png"));
 
         Label store = new Label();
         store.setText("Store");
@@ -118,7 +118,7 @@ public class HelloController implements Initializable {
         panier.setFitWidth(70);
         panier.setFitHeight(70);
         panier.setX(1510);
-        panier.setImage(new Image("C:\\Users\\anene\\IdeaProjects\\MaxGain_Store\\src\\main\\java\\com\\example\\maxgain_store\\assets\\cart.png"));
+        panier.setImage(new Image("C:\\Users\\anene\\IdeaProjects\\PIDEV-3A21-Gym-MAXGAIN\\src\\main\\java\\com\\example\\maxgain_store\\assets\\cart.png"));
 
         topPane.getChildren().add(logo);
         topPane.getChildren().add(store);

@@ -6,29 +6,36 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import tn.esprit.entities.ReservationTerrain;
 import tn.esprit.entities.Terrain;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.util.Properties;
 import java.util.ResourceBundle;
-import javafx.scene.web.WebView;
+import tn.esprit.services.ReservationService;
+import tn.esprit.services.TerrainService;
+import tn.esprit.services.UserService;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 
 public class DetaillTerrainController implements Initializable {
 
-    @FXML
-    private WebView mapView;
+
     @FXML
     private Label Description_terrain;
 
@@ -36,9 +43,17 @@ public class DetaillTerrainController implements Initializable {
     private ImageView ImageView_terrain;
 
     @FXML
-    private Label Nom_terrain;
+    private  Label Nom_terrain;
+
     @FXML
     private Label adresse_text;
+
+    @FXML
+    private  DatePicker date;
+
+    @FXML
+    private TextField email;
+
     @FXML
     private AnchorPane menu_form;
     @FXML
@@ -52,10 +67,14 @@ public class DetaillTerrainController implements Initializable {
     private Terrain terrain;
     @FXML
     private Button Button_Reservation;
-    WebView webView;
+    @FXML
+    private  ComboBox<String> hourComboBox;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        for (int i = 9; i < 24; i++) {
+            String formattedHour = String.format("%02d:00", i); // Formatage de l'heure
+            hourComboBox.getItems().add(formattedHour);
+        }
 
     }
 
@@ -80,29 +99,82 @@ public class DetaillTerrainController implements Initializable {
 
     public void reserverTerrain(ActionEvent actionEvent) {
         try{
-            Button clickedButton = (Button) actionEvent.getSource();
-            Terrain terrain = (Terrain) clickedButton.getUserData(); // Récupérer les données du terrain à partir du bouton
+            ReservationService connector = new ReservationService();
+            String Email=email.getText();
 
+            TerrainService terrain =new TerrainService();
+            int idTerrain= terrain.obtenirIdTerrain(Nom_terrain.getText());
 
-            FXMLLoader loader = new FXMLLoader();
-            File fxmlFile = new File("src/main/resources/reservation.fxml");
-            URL url = fxmlFile.toURI().toURL();
-            loader.setLocation(url);
-            Parent root = loader.load();
+            UserService user=new UserService();
+            String idUser=user.obtenirNomUser(1);
+            Date selectedDate = Date.valueOf(date.getValue());
 
-            RéservationController controller = loader.getController();
-            controller.setHomeController(mainFormController);
+            String selectedHour = hourComboBox.getValue();
+            String[] parts = selectedHour.split(":");
 
-            // Passer les données du terrain au contrôleur du détail du terrain
-            controller.setreserverTerrain(terrain);
+            int hour = Integer.parseInt(parts[0]);
+            int minute = Integer.parseInt(parts[1]);
 
+            // Création d'un objet Time
+            Time selectedTime = new Time(hour, minute, 0);
 
-            Pane menu_gridPane = mainFormController.getDetailPane();
+            System.out.println(selectedTime);
+            if (connector.checkTerrainExist(idTerrain,selectedDate,selectedTime)) {
+                Alert existingNameAlert = new Alert(Alert.AlertType.ERROR);
+                existingNameAlert.setTitle("Error");
+                existingNameAlert.setHeaderText(null);
+                existingNameAlert.setContentText("Terrain déjà indisponible.Modifier Date ou heure");
+                existingNameAlert.showAndWait();
+            }else {
+                connector.add(new ReservationTerrain(selectedDate, selectedTime, idTerrain, 1));
+                sendEmail(Email, Nom_terrain.getText(), date.getValue(), hourComboBox.getValue());
+                // Afficher une confirmation à l'utilisateur
+                Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
+                confirmationAlert.setTitle("Success");
+                confirmationAlert.setHeaderText(null);
+                confirmationAlert.setContentText("Votre réservation a été ajoutée avec succès.");
+                confirmationAlert.showAndWait();
 
-            menu_gridPane.getChildren().clear();
-            menu_gridPane.getChildren().add(root);
-
+            }
         }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static void sendEmail(String recipientEmail, String terrain, LocalDate date, String heure) {
+        // Configurer les propriétés SMTP
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com"); // Hôte SMTP (exemple avec Gmail)
+        props.put("mail.smtp.port", "587"); // Port SMTP (587 pour Gmail)
+        props.put("mail.smtp.auth", "true"); // Authentification SMTP
+        props.put("mail.smtp.starttls.enable", "true"); // Activation du démarrage TLS
+
+        // Créer une session SMTP avec authentification
+        Session session = Session.getInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("oumayma.zou19@gmail.com", "psmj mcri bjif zvuo");
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("oumayma.zou19@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
+            message.setSubject("Confirmation de la reservation"); // Définir le sujet du message
+            String content = "Cher Client,\n\n";
+            content += "Votre réservation a été confirmée avec succès. Voici les détails de votre réservation :\n\n";
+            content += "Terrain: " + terrain + "\n";
+            content += "Date: " + date + "\n";
+            content += "Heure: " + heure + "\n\n";
+            content += "Merci de nous avoir choisis. Nous vous souhaitons un excellent moment sur notre terrain.\n\n";
+            content += "Cordialement,\nVotre équipe de réservation";
+
+            message.setText(content);
+
+            // Envoyer le message
+            Transport.send(message);
+
+            System.out.println("E-mail envoyé avec succès à " + recipientEmail);
+        } catch (MessagingException e) {
             e.printStackTrace();
         }
     }

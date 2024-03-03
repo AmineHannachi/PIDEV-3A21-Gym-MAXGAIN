@@ -3,8 +3,11 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -14,20 +17,20 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane layoutX="113.0" layoutY="181.0" prefHeight="461.0" prefWidth="935.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.DetaillTerrainController">
-                <AnchorPane layoutY="-3.0" prefHeight="464.0" prefWidth="974.0" BorderPane.alignment="CENTER">
+                <AnchorPane layoutX="6.0" prefHeight="464.0" prefWidth="974.0" BorderPane.alignment="CENTER">
                     <children>
                         <AnchorPane fx:id="menu_form" layoutX="113.0" layoutY="181.0" prefHeight="600.0" prefWidth="878.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <AnchorPane layoutX="90.0" layoutY="17.0" prefHeight="430.0" prefWidth="880.0" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="17.0">
+                                <AnchorPane layoutX="-104.0" layoutY="6.0" prefHeight="461.0" prefWidth="1074.0" stylesheets="@mainFormDesign.css" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="-4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="6.0">
                                     <styleClass>
                                         <String fx:value="white-bg" />
                                         <String fx:value="shadow" />
                                         <String fx:value="radius" />
                                     </styleClass>
                                     <children>
-                                        <ScrollPane fx:id="menu_scrollPane" layoutX="13.0" layoutY="14.0" prefHeight="367.0" prefWidth="697.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="14.0">
+                                        <ScrollPane fx:id="menu_scrollPane" layoutX="-90.0" prefHeight="461.0" prefWidth="1035.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-90.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="0.0">
                                             <content>
-                                                <GridPane fx:id="menu_gridPane" prefHeight="13.0" prefWidth="77.0">
+                                                <GridPane fx:id="menu_gridPane" prefHeight="11.0" prefWidth="51.0">
                                                     <columnConstraints>
                                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                     </columnConstraints>
@@ -38,28 +41,40 @@
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
-         <Label fx:id="Nom_terrain" layoutX="493.0" layoutY="32.0" prefHeight="32.0" prefWidth="317.0" text="Label" textFill="#2c044d">
+         <Label fx:id="Nom_terrain" layoutX="500.0" layoutY="42.0" prefHeight="32.0" prefWidth="317.0" text="Label" textFill="#2c044d">
             <font>
                <Font size="22.0" />
             </font>
          </Label>
-         <ImageView fx:id="ImageView_terrain" fitHeight="288.0" fitWidth="394.0" layoutX="23.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-         <Text fx:id="text" layoutX="441.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="341.0">
+         <ImageView fx:id="ImageView_terrain" fitHeight="225.0" fitWidth="405.0" layoutX="17.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" />
+         <Text fx:id="text" layoutX="508.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="341.0">
             <font>
                <Font size="16.0" />
             </font>
          </Text>
-         <FontAwesomeIcon glyphName="MAP_MARKER" layoutX="572.0" layoutY="99.0" size="2em" />
-         <Label fx:id="adresse_text" layoutX="600.0" layoutY="80.0" prefHeight="0.0" prefWidth="253.0" text="Label" textFill="#024005">
+         <FontAwesomeIcon glyphName="MAP_MARKER" layoutX="549.0" layoutY="116.0" size="2em" />
+         <Label fx:id="adresse_text" layoutX="580.0" layoutY="97.0" prefHeight="0.0" prefWidth="253.0" text="Label" textFill="#024005">
             <font>
                <Font size="15.0" />
             </font>
          </Label>
-         <Button fx:id="Button_Reservation" layoutX="769.0" layoutY="395.0" mnemonicParsing="false" onAction="#reserverTerrain" prefHeight="43.0" prefWidth="105.0" styleClass="clear-btn" stylesheets="@dashboardDesign.css" text="Réserver">
+         <Button fx:id="Button_Reservation" layoutX="806.0" layoutY="407.0" mnemonicParsing="false" onAction="#reserverTerrain" prefHeight="43.0" prefWidth="105.0" styleClass="clear-btn" stylesheets="@dashboardDesign.css" text="Réserver">
             <font>
                <Font size="19.0" />
             </font>
          </Button>
+         <TextField fx:id="email" layoutX="14.0" layoutY="316.0" prefHeight="29.0" prefWidth="264.0" promptText="Saisir votre Email" style="-fx-border-color: #0598ff; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px0px 0px 2px 0px;">
+            <font>
+               <Font size="13.0" />
+            </font>
+         </TextField>
+         <DatePicker fx:id="date" layoutX="329.0" layoutY="317.0" promptText="Sélectionner Date" styleClass="date-picker" stylesheets="@mainFormDesign.css" />
+         <ComboBox fx:id="hourComboBox" layoutX="643.0" layoutY="316.0" prefHeight="31.0" prefWidth="206.0" promptText="Selectionner Heure" style="-fx-border-color: #514eee; -fx-background-color: #fff;" styleClass="combo-box" stylesheets="@mainFormDesign.css" visibleRowCount="6" />
+         <Label layoutX="125.0" layoutY="378.0" prefHeight="17.0" prefWidth="594.0" text="Pour réserver un terrain, veuillez ecrivez votre Email e sélectionner Date et Heure">
+            <font>
+               <Font name="Arial Rounded MT Bold" size="14.0" />
+            </font>
+         </Label>
                     </children>
                 </AnchorPane>
 </AnchorPane>

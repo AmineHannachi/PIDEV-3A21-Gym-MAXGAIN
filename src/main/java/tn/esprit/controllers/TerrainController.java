@@ -144,7 +144,7 @@ public class TerrainController  implements Initializable {
             Alert emptyFieldsAlert = new Alert(Alert.AlertType.WARNING);
             emptyFieldsAlert.setTitle("Warning");
             emptyFieldsAlert.setHeaderText(null);
-            emptyFieldsAlert.setContentText("Please fill in all fields.");
+            emptyFieldsAlert.setContentText("Merci de remplir tous les champs.");
             emptyFieldsAlert.showAndWait();
             return; // Sortie de la méthode car un champ est vide
         }
@@ -154,7 +154,7 @@ public class TerrainController  implements Initializable {
                 Alert existingNameAlert = new Alert(Alert.AlertType.ERROR);
                 existingNameAlert.setTitle("Error");
                 existingNameAlert.setHeaderText(null);
-                existingNameAlert.setContentText("A terrain with the same name already exists.");
+                existingNameAlert.setContentText("Un terrain du même nom existe déjà.");
                 existingNameAlert.showAndWait();
                 return; // Sortie de la méthode car un terrain avec le même nom existe déjà
             }
@@ -162,7 +162,7 @@ public class TerrainController  implements Initializable {
             alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Message");
             alert.setHeaderText(null);
-            alert.setContentText("Successfully Added!");
+            alert.setContentText("ajouté avec succès!");
             alert.showAndWait();
             tableReadAll();
             clearTextFields();
@@ -196,25 +196,14 @@ public class TerrainController  implements Initializable {
 
          }
      }
-//    public void saveImage(File sourceFile) {
-//        Path sourcePath = sourceFile.toPath();
-//        Path destinationPath = Paths.get(destinationFolder, sourceFile.getName());
 //
-//        try {
-//            Files.copy(sourcePath, destinationPath);
-//            System.out.println("Image sauvegardée avec succès dans le dossier XAMPP.");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            System.err.println("Erreur lors de la sauvegarde de l'image dans le dossier XAMPP.");
-//        }
-//    }
     public void UpdateTerrain() {
         TerrainService connector = new TerrainService();
         connector.Update(new Terrain(Integer.parseInt(idTextField.getText()),nomTextField.getText(), DescripTextArea.getText() ,adresseTextField.getText(), Double.parseDouble(prixTextField.getText()), imageT.getUrl()));
         alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Message");
         alert.setHeaderText(null);
-        alert.setContentText("Successfully updated!");
+        alert.setContentText("Mise à jour réussie!");
         alert.showAndWait();
         tableReadAll();
         clearTextFields();
@@ -237,7 +226,7 @@ public class TerrainController  implements Initializable {
         alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Message");
         alert.setHeaderText(null);
-        alert.setContentText("Successfully Deleted!");
+        alert.setContentText("Supprimé avec succès!");
         alert.showAndWait();
         tableReadAll();
         clearTextFields();

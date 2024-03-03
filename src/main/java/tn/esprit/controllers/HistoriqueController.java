@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import tn.esprit.entities.ReservationTerrain;
 import tn.esprit.entities.Terrain;
+import tn.esprit.services.TerrainService;
 
 import java.sql.Date;
 import java.time.format.DateTimeFormatter;
@@ -46,7 +47,9 @@ public class HistoriqueController {
         hist_form.setVisible(true);
 
         int id=reserveterrain.getId_terrain();
-        String Nom=;
+        TerrainService terrain=new TerrainService();
+        String Nom=terrain.obtenirNomSalle(id);
+        Nom_ter.setText(Nom);
 
         java.sql.Date date = (Date) reserveterrain.getDate();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");

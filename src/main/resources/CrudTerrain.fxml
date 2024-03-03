@@ -128,7 +128,7 @@
                                                             <Font name="Tahoma" size="14.0" />
                                                         </font>
                                                     </Label>
-                                                    <TextField fx:id="nomTextField" layoutX="127.0" layoutY="341.0" prefHeight="25.0" prefWidth="172.0" style="-fx-border-color: #0598ff; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px0px 0px 2px 0px;" styleClass="textfield" stylesheets="@dashboardDesign.css" />
+                                                    <TextField fx:id="nomTextField" layoutX="127.0" layoutY="341.0" prefHeight="25.0" prefWidth="172.0" style="-fx-border-color: #0598ff; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px 0px 0px 2px 0px;" styleClass="textfield" stylesheets="@dashboardDesign.css" />
                                                     <Label fx:id="adresse" layoutX="27.0" layoutY="422.0" text="Adresse:">
                                                         <font>
                                                             <Font name="Tahoma" size="14.0" />

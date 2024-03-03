@@ -38,7 +38,7 @@
       <Label />
         <HBox alignment="CENTER" prefHeight="54.0" prefWidth="87.0">
             <children>
-                <Button fx:id="btn_edit" mnemonicParsing="false" prefHeight="38.0" prefWidth="42.0" style="-fx-background-color: white;" styleClass="button-circle" stylesheets="@style.css" textFill="#dcd5d5">
+                <Button fx:id="btn_edit" mnemonicParsing="false" prefHeight="38.0" onAction="#updateClient" prefWidth="42.0" style="-fx-background-color: white;" styleClass="button-circle" stylesheets="@style.css" textFill="#dcd5d5">
                     <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" styleClass="button-circle">
                             <image>

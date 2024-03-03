@@ -5,21 +5,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import tn.esprit.entities.User;
-import tn.esprit.services.ClientService;
-import tn.esprit.utilis.DataSource;
-
+import tn.esprit.services.UserService;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
+import javafx.scene.Parent; // Assurez-vous d'importer la classe Parent
 
 public class ItemController implements Initializable {
 
@@ -65,20 +60,12 @@ public class ItemController implements Initializable {
     @FXML
     private TextField confirmPass;
 
-    private ClientService clientService;
-
-    private Connection connection;
-
     private User user;
 
     private AlertMessage alert = new AlertMessage();
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        clientService = new ClientService();
-    }
+    private UserService userService;
 
-    // Méthode pour mettre à jour les valeurs des labels avec les données de l'utilisateur
     public void setUser(User user) {
         this.user = user;
         if (user != null) {
@@ -90,115 +77,60 @@ public class ItemController implements Initializable {
         }
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        userService = new UserService(); // Initialisation du service client
+    }
+
+
+
     @FXML
-    void deleteClient(ActionEvent event) {
+    void updateClient(ActionEvent event) {
         if (user != null) {
-            String message = "Are you sure you want to delete the client " + user.getUsername() + " ?";
-            if (alert.confirmMessage(message)) {
-                clientService.deleteClient(user.getUsername());
-                refreshVBox(); // Mettre à jour le VBox après la suppression
-                alert.successMessage("Client deleted successfully !");
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/alert.fxml"));
+                Parent alertRoot = fxmlLoader.load(); // Déclarez alertRoot comme Parent
+                AlertController alertController = fxmlLoader.getController();
+                alertController.setUser(user);
+                alertController.setUserService(userService);
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(alertRoot));
+                stage.setTitle("Edit User");
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         } else {
             alert.errorMessage("No client selected !");
         }
     }
 
-//    @FXML
-//    void addClient(ActionEvent event) {
-//        String errorMessage = validateFields();
-//        if (errorMessage != null) {
-//            alert.errorMessage(errorMessage);
-//        } else {
-//            LocalDate localDate = birthdate.getValue();
-//            if (localDate != null) {
-//                java.sql.Date javaDate = java.sql.Date.valueOf(localDate);
-//                clientService.addClient(username.getText(), email.getText(), javaDate,
-//                        male.isSelected() ? "Male" : "Female", Integer.parseInt(phone.getText()),
-//
-//                alert.successMessage("Client added successfully!"),
-//            } else {
-//                alert.errorMessage("Please select a valid birthdate.");
-//            }
-//        }
-//    }
 
-    private String validateFields() {
-        StringBuilder errorMessage = new StringBuilder();
-
-        // Validate email format
-        String emailPattern = "[a-zA-Z0-9]+@gmail\\.com";
-        boolean isValidEmail = email.getText().matches(emailPattern);
-        if (!isValidEmail) {
-            errorMessage.append("Please enter a valid Gmail address.\n");
+    @FXML
+    private void deleteClient(ActionEvent event) {
+        String message = "Are you sure you want to delete the client " + user.getUsername() + " ?";
+        if (alert.confirmMessage(message)) {
+            userService.delete(user);
+            refreshVBox(); // Mettre à jour le VBox après la suppression
+            alert.successMessage("Client deleted successfully !");
         }
-
-        // Validate age (minimum 18 years old)
-        LocalDate currentDate = LocalDate.now();
-        LocalDate birthDate = birthdate.getValue();
-        long age = ChronoUnit.YEARS.between(birthDate, currentDate);
-        boolean isOver18 = age >= 18;
-        if (!isOver18) {
-            errorMessage.append("You must be at least 18 years old to register.\n");
-        }
-
-        // Validate gender selection
-        if (!male.isSelected() && !female.isSelected()) {
-            errorMessage.append("Please select your gender.\n");
-        }
-
-        // Validate phone number format (8 digits)
-        String phoneNumber = phone.getText();
-        if (phoneNumber.length() != 8 || !phoneNumber.matches("\\d{8}")) {
-            errorMessage.append("Please enter a valid phone number with 8 digits.\n");
-        }
-
-        // Check if the user exists in the database
-        if (isUserInDatabase()) {
-            errorMessage.append("User already exists in the database.\n");
-        }
-
-        return errorMessage.length() == 0 ? null : errorMessage.toString();
     }
 
-    private boolean isUserInDatabase() {
-        boolean userExists = false;
-        try {
-            if (connection == null || connection.isClosed()) {
-                // Get the database connection (you need to implement DataSource class)
-                connection = DataSource.getInstance().getCnx();
-            }
-
-            String inputUsername = username.getText();
-            String query = "SELECT COUNT(*) FROM user WHERE username = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, inputUsername);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                int count = resultSet.getInt(1);
-                userExists = count > 0;
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return userExists;
-    }
-
-    // Méthode pour rafraîchir le VBox après la suppression
     private void refreshVBox() {
-//        // Effacer les enfants actuels du VBox
-//        itemC.getChildren().clear();
-//        // Recharger les clients dans le VBox
-//        clientService.getAllClients().forEach(client -> {
-//            try {
-//                FXMLLoader loader = new FXMLLoader(getClass().getResource("/item.fxml"));
-//                Node node = loader.load();
-//                ItemController itemController = loader.getController();
-//                itemController.setUser(client);
-//                itemC.getChildren().add(node);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        });
+        // Effacer les enfants actuels du VBox
+        itemC.getChildren().clear();
+        // Recharger les clients dans le VBox
+        userService.getAllClients().forEach(client -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/item.fxml"));
+                Node node = loader.load();
+                ItemController itemController = loader.getController();
+                itemController.setUser(client);
+                itemC.getChildren().add(node);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

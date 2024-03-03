@@ -19,6 +19,31 @@ public class User  {
     private String confirmPass;
     private int phone;
     private byte[] salt;
+
+    public User() {
+    }
+    public User( String username,String email,  Date birthdate,  String gender,  int phone , Role role) {
+        this.username = username;
+        this.role = role;
+        this.birthdate = birthdate;
+        this.email = email;
+        this.gender = gender;
+        this.phone = phone;
+
+    }
+    public User(Long id, String username, String password, Role role, Date birthdate, String email, String gender, String confirmPass, int phone, byte[] salt) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.birthdate = birthdate;
+        this.email = email;
+        this.gender = gender;
+        this.confirmPass = confirmPass;
+        this.phone = phone;
+        this.salt = salt;
+    }
+
     public byte[] getSalt() {
         return salt;
     }

@@ -250,7 +250,6 @@ public class DetailEventController implements Initializable {
         int code = 100000 + random.nextInt(900000); // Générer un nombre aléatoire entre 100000 et 999999
         getData.codeDeConfirmation = Integer.toString(code); // Convertir le nombre en une chaîne de caractères
 
-        sendEmail(codeDeConfirmation);
 
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Saisir le code de confirmation");
@@ -268,7 +267,7 @@ public class DetailEventController implements Initializable {
                 new PassService().ajouterPass(pass);
                 new EvenementService().MAJpass(idEvent);
                 System.out.println("pass ajoute");
-                
+
                 sendEmailNotif(idEvent);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Texte saisi");
@@ -324,7 +323,7 @@ public class DetailEventController implements Initializable {
 
         // Create and send the message
         try {
-            // Create the message 
+            // Create the message
             Message message = new MimeMessage(session);
             // Set sender
             message.setFrom(new InternetAddress("mohamedali.marrakchi@esprit.tn"));
@@ -362,9 +361,9 @@ public class DetailEventController implements Initializable {
         }
 
     }
-    
-    
-    
+
+
+
     public static String saveImageToFile(ImageView image, String fileName) {
         try {
             BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image.getImage(), null);
@@ -448,7 +447,7 @@ public class DetailEventController implements Initializable {
 
         // Create and send the message
         try {
-            // Create the message 
+            // Create the message
             Message message = new MimeMessage(session);
             // Set sender
             message.setFrom(new InternetAddress("mohamedali.marrakchi@esprit.tn"));
@@ -480,7 +479,7 @@ public class DetailEventController implements Initializable {
             Map<String, Object> variables = new HashMap<>();
             variables.put("name", "Zeddini Mohamed Dhia");
             variables.put("message", "Hello, world!");
-            
+
             //String idE= EventIdLabelId.getText();
             Evenement ev = new EvenementService().recupererEventById(idE);
             String QrContent="Client Zeddini Dhia "+"Event Name "+ev.getNom()+" allowed" ;

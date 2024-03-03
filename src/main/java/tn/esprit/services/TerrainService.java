@@ -40,9 +40,9 @@ import tn.esprit.utilis.DataSource;
                 Preste.setInt(1, idt);
                 int rowsDeleted = Preste.executeUpdate();
                 if (rowsDeleted > 0) {
-                    System.out.println("Terrain deleted successfully");
+                    System.out.println("Terrain supprimé avec succès");
                 } else {
-                    System.out.println("Failed to delete terrain");
+                    System.out.println("Échec de la suppression du terrain");
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -65,7 +65,7 @@ import tn.esprit.utilis.DataSource;
 
                 int rowsUpdated = ste.executeUpdate();
                 if (rowsUpdated > 0) {
-                    System.out.println("Produit modifié avec succès");
+                    System.out.println(" modifié avec succès");
                 } else {
                     System.out.println("Aucun produit n'a été modifié");
                 }

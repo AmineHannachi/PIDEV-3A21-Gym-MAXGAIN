@@ -4,12 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import tn.esprit.entities.Salle;
 import tn.esprit.entities.cours;
-import tn.esprit.entities.User;
 import tn.esprit.utilis.DataSource;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CoursService implements IService<cours> {
 
@@ -42,8 +39,29 @@ public class CoursService implements IService<cours> {
     }
 
     @Override
-    public String obtenirNomSalle(int idSalle) {
-        return null;
+    public String obtenirNomSalle(int idCours) {
+        String nomCours = null; // par défaut, si l'ID n'est pas trouvé, nous retournons -1
+
+        try {
+
+            String sql = "SELECT type FROM cours WHERE id = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, idCours);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                nomCours = resultSet.getString("type");
+            }
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return nomCours;
+
     }
 
 
@@ -55,9 +73,9 @@ public class CoursService implements IService<cours> {
             Preste.setInt(1, id);
             int rowsDeleted = Preste.executeUpdate();
             if (rowsDeleted > 0) {
-                System.out.println("cours deleted successfully");
+                System.out.println("cours supprimé avec succès");
             } else {
-                System.out.println("Failed to delete cours");
+                System.out.println("Échec de la suppression du cours");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

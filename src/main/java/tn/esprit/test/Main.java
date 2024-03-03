@@ -1,10 +1,7 @@
 package tn.esprit.test;
 
 import tn.esprit.entities.*;
-import tn.esprit.services.CoursService;
-import tn.esprit.services.SalleService;
-import tn.esprit.services.TerrainService;
-import tn.esprit.services.UserService;
+import tn.esprit.services.*;
 import tn.esprit.utilis.DataSource;
 
 
@@ -76,5 +73,10 @@ public class Main {
         System.out.println("*****");
 
         System.out.println(new SalleService().obtenirNomSalle(1));
+
+        System.out.println("*****");
+        planningService pss = new planningService();
+        int id= pss.checkCoursExist(3,"salsa");
+        System.out.println(id);
     }
 }

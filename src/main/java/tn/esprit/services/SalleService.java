@@ -49,9 +49,9 @@ public class SalleService implements IService<Salle> {
                 Preste.setInt(1, ids);
                 int rowsDeleted = Preste.executeUpdate();
                 if (rowsDeleted > 0) {
-                    System.out.println("salle deleted successfully");
+                    System.out.println("salle supprimée avec succès");
                 } else {
-                    System.out.println("Failed to delete salle");
+                    System.out.println("Échec de la suppression de la salle");
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();

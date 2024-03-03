@@ -177,5 +177,5 @@
       </font>
    </Label>
    <FontAwesomeIcon fill="#514eee" layoutX="460.0" layoutY="876.0" size="2em" text="" />
-   <Button fx:id="button_Reservation" layoutX="140.0" layoutY="926.0" mnemonicParsing="false" onAction="#reservationSalle" prefHeight="34.0" prefWidth="125.0" styleClass="button_Reservation" stylesheets="@dashboardDesign.css" text="palnning" />
+   <Button fx:id="button_Reservation" layoutX="138.0" layoutY="898.0" mnemonicParsing="false" onAction="#reservationSalle" prefHeight="34.0" prefWidth="125.0" styleClass="button_Reservation" stylesheets="@dashboardDesign.css" text="palnning" />
 </AnchorPane>

@@ -3,22 +3,18 @@ package tn.esprit.controllers;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import tn.esprit.entities.Salle;
 import tn.esprit.entities.cours;
 import tn.esprit.services.CoursService;
 import tn.esprit.services.SalleService;
 
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.List;
+import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
 public class CoursController implements Initializable {
@@ -88,7 +84,7 @@ public class CoursController implements Initializable {
 
     Alert alert;
 
-
+ResultSet rs;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tableReadAll();
@@ -108,7 +104,7 @@ public class CoursController implements Initializable {
             if (newSelection != null) {
                 cours selectedUser = newSelection;
 
-                idC.setText(String.valueOf(selectedUser.getId()));
+                //idC.setText(String.valueOf(selectedUser.setId(rs.getInt("id"))));
                 type.setText(selectedUser.getType());
 
             }
@@ -137,9 +133,9 @@ public class CoursController implements Initializable {
             // Indiquez à l'utilisateur qu'il doit remplir le champ de texte de la salle
         }
         alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information Message");
+        alert.setTitle("Message d'information");
         alert.setHeaderText(null);
-        alert.setContentText("Successfully Added!");
+        alert.setContentText("Ajouté avec succès!");
         alert.showAndWait();
         tableReadAll();
         clearTextFields();
@@ -159,9 +155,9 @@ public class CoursController implements Initializable {
         CoursService connector = new CoursService();
         connector.delete(Integer.parseInt(idC.getText()));
         alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information Message");
+        alert.setTitle("Message d'information");
         alert.setHeaderText(null);
-        alert.setContentText("Successfully deleted!");
+        alert.setContentText("Ajouté avec succès!");
         alert.showAndWait();
         tableReadAll();
         clearTextFields();
@@ -185,9 +181,9 @@ public class CoursController implements Initializable {
             }
 
         alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information Message");
+        alert.setTitle("Message d'information");
         alert.setHeaderText(null);
-        alert.setContentText("Successfully updated!");
+        alert.setContentText("Ajouté avec succès!");
         alert.showAndWait();
         tableReadAll();
         clearTextFields();

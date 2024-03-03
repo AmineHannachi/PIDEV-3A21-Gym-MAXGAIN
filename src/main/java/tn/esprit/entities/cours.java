@@ -54,8 +54,9 @@ public class cours {
         return salle;
     }
 
-    public void setId(int id) {
+    public int setId(int id) {
         this.id = id;
+        return id;
     }
 
     public void setType(String type) {

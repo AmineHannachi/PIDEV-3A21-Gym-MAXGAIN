@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="hist_form" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="435.0" stylesheets="@cardDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.HistoriqueController">
+    <children>
+        <VBox fx:id="salleVbox" layoutX="65.0" layoutY="-10.0" prefHeight="108.0" prefWidth="411.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-27.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox fx:id="salleHbox" alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="462.0">
+                    <children>
+                        <Label prefHeight="40.0" prefWidth="13.0" textAlignment="CENTER" textFill="#232c86">
+                            <font>
+                                <Font size="17.0" />
+                            </font>
+                        </Label>
+                       
+                        <Label fx:id="Nom_sal" alignment="CENTER" prefHeight="28.0" prefWidth="188.0" text="Nom salle" textAlignment="CENTER" textFill="#2333c3">
+                            <font>
+                                <Font size="17.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="25.0" />
+                            </HBox.margin>
+                        </Label>
+                  <Label prefHeight="17.0" prefWidth="142.0" />
+                  <ImageView fitHeight="48.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../../xampp/htdocs/MaxGain/images/Colorful%20Illustrative%20Health%20and%20Fitness%20Club%20Logo.png" />
+                     </image>
+                  </ImageView>
+                    </children>
+                </HBox>
+                <HBox fx:id="salleHbox1" alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="438.0">
+                    <children>
+                        <Label prefHeight="40.0" prefWidth="79.0" textAlignment="CENTER" textFill="#232c86">
+                            <font>
+                                <Font size="17.0" />
+                            </font>
+                        </Label>
+                        <FontAwesomeIcon selectionFill="#ebe5e5" size="1.5em" text="" wrappingWidth="27.0" />
+                        <Label fx:id="date_sal" prefHeight="48.0" prefWidth="113.0" text="Date salle" textAlignment="CENTER" textFill="#1a8a0b">
+                            <font>
+                                <Font size="17.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="prod_name2" alignment="CENTER" prefHeight="40.0" prefWidth="126.0" text="Time salle " textAlignment="CENTER" textFill="#d31414">
+                            <font>
+                                <Font size="17.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="25.0" />
+                            </HBox.margin>
+                        </Label>
+                        <FontAwesomeIcon size="2em" text="" wrappingWidth="23.0" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+    <styleClass>
+        <String fx:value="card" />
+        <String fx:value="shadow" />
+    </styleClass>
+</AnchorPane>

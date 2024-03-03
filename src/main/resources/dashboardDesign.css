@@ -202,3 +202,18 @@ and open the template in the editor.
     -fx-font-weight: 200;
     -fx-font-family:"Century Gothic";
 }
+
+
+
+.button_confirmation{
+    -fx-background-color:#3357a4;
+    -fx-background-radius: 50;
+    -fx-text-fill:#fff;
+    -fx-font-size:14px;
+    -fx-font-family:"Century Gothic";
+    -fx-cursor:hand;
+}
+
+.button_confirmation:hover{
+    -fx-background-color:#3357a4;
+}

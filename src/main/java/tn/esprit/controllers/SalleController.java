@@ -28,8 +28,13 @@ import tn.esprit.services.TerrainService;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.controlsfx.control.textfield.TextFields;
@@ -200,9 +205,9 @@ Alert alert;
         Salle salle=new Salle();
         if(nom.getText().isEmpty() || adresse.getText().isEmpty() || descriptionArea.getText().isEmpty() || imageT.getUrl().isEmpty()) {
             Alert emptyFieldsAlert = new Alert(Alert.AlertType.WARNING);
-            emptyFieldsAlert.setTitle("Warning");
+            emptyFieldsAlert.setTitle("erreur ");
             emptyFieldsAlert.setHeaderText(null);
-            emptyFieldsAlert.setContentText("Please fill in all fields.");
+            emptyFieldsAlert.setContentText("Merci de remplir tous les champs");
             emptyFieldsAlert.showAndWait();
             return; // Sortie de la méthode car un champ est vide
         }
@@ -210,7 +215,7 @@ Alert alert;
 
             if (connector.checkSalleExist(nom.getText())) {
                 Alert existingNameAlert = new Alert(Alert.AlertType.ERROR);
-                existingNameAlert.setTitle("Error");
+                existingNameAlert.setTitle("Erreur");
                 existingNameAlert.setHeaderText(null);
                 existingNameAlert.setContentText("salle déja exist.");
                 existingNameAlert.showAndWait();
@@ -219,9 +224,9 @@ Alert alert;
             }
             connector.add(new Salle(nom.getText(), adresse.getText(), descriptionArea.getText() , imageT.getUrl()));
             alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information Message");
+            alert.setTitle("Message d'information");
             alert.setHeaderText(null);
-            alert.setContentText("Successfully Added!");
+            alert.setContentText("ajouté avec succès");
             alert.showAndWait();
             tableReadAll();
             clearTextFields();
@@ -244,9 +249,9 @@ Alert alert;
         SalleService connector = new SalleService();
         connector.Update(new Salle(Integer.parseInt(id.getText()),nom.getText(),adresse.getText(), descriptionArea.getText(), imageT.getUrl()));
         alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information Message");
+        alert.setTitle("Message d'information");
         alert.setHeaderText(null);
-        alert.setContentText("Successfully updated!");
+        alert.setContentText("modifier avec succès");
         alert.showAndWait();
         tableReadAll();
         clearTextFields();
@@ -256,9 +261,9 @@ Alert alert;
         SalleService connector = new SalleService();
         connector.delete(Integer.parseInt(id.getText()));
         alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information Message");
+        alert.setTitle("Message d'information");
         alert.setHeaderText(null);
-        alert.setContentText("Successfully deleted!");
+        alert.setContentText("Supprimer avec succès");
         alert.showAndWait();
         tableReadAll();
         clearTextFields();
@@ -267,15 +272,36 @@ Alert alert;
     }
 
 
-    public void addInsertImage() {
+//    public void addInsertImage() {
+//
+//        FileChooser open = new FileChooser();
+//        File file = open.showOpenDialog(home_form.getScene().getWindow());
+//
+//        if (file != null) {
+//            // Charger l'image dans l'ImageView
+//            imageT = new Image(file.toURI().toString());
+//            add_image.setImage(imageT);
+//        }
+//    }
+
+
+    public void addInsertImage() throws IOException {
 
         FileChooser open = new FileChooser();
-        File file = open.showOpenDialog(home_form.getScene().getWindow());
+      File file = open.showOpenDialog(home_form.getScene().getWindow());
 
         if (file != null) {
+            String imageName = UUID.randomUUID().toString() + "-" + file.getName();
+            // Copier l'image dans le dossier XAMPP
+            String destinationFolder = "C:\\xampp\\htdocs\\MaxGain\\images";
+            Path sourcePath = file.toPath();
+            Path destinationPath = Paths.get(destinationFolder, imageName);
+            Files.copy(sourcePath, destinationPath);
+
             // Charger l'image dans l'ImageView
             imageT = new Image(file.toURI().toString());
             add_image.setImage(imageT);
+
         }
     }
 

@@ -127,14 +127,15 @@ public class DetaillTerrainController implements Initializable {
                 existingNameAlert.showAndWait();
             }else {
                 connector.add(new ReservationTerrain(selectedDate, selectedTime, idTerrain, 1));
-                sendEmail(Email, Nom_terrain.getText(), date.getValue(), hourComboBox.getValue());
+
                 // Afficher une confirmation à l'utilisateur
                 Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
                 confirmationAlert.setTitle("Success");
                 confirmationAlert.setHeaderText(null);
                 confirmationAlert.setContentText("Votre réservation a été ajoutée avec succès.");
                 confirmationAlert.showAndWait();
-
+                clearTextFields();
+                sendEmail(Email, Nom_terrain.getText(), date.getValue(), hourComboBox.getValue());
             }
         }catch (Exception e) {
             e.printStackTrace();
@@ -177,5 +178,11 @@ public class DetaillTerrainController implements Initializable {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    void clearTextFields() {
+        date.setValue(null);
+        email.setText("");
+        hourComboBox.getSelectionModel().select(-1); // Clear the selected item in the combo box
     }
 }

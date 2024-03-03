@@ -63,14 +63,14 @@
                <Font size="19.0" />
             </font>
          </Button>
-         <TextField fx:id="email" layoutX="14.0" layoutY="316.0" prefHeight="29.0" prefWidth="264.0" promptText="Saisir votre Email" style="-fx-border-color: #0598ff; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px0px 0px 2px 0px;">
+         <TextField fx:id="email" layoutX="14.0" layoutY="316.0" prefHeight="29.0" prefWidth="264.0" promptText="Saisir votre Email" style="-fx-border-color: #0598ff; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px 0px 0px 2px 0px;">
             <font>
                <Font size="13.0" />
             </font>
          </TextField>
          <DatePicker fx:id="date" layoutX="329.0" layoutY="317.0" promptText="Sélectionner Date" styleClass="date-picker" stylesheets="@mainFormDesign.css" />
          <ComboBox fx:id="hourComboBox" layoutX="643.0" layoutY="316.0" prefHeight="31.0" prefWidth="206.0" promptText="Selectionner Heure" style="-fx-border-color: #514eee; -fx-background-color: #fff;" styleClass="combo-box" stylesheets="@mainFormDesign.css" visibleRowCount="6" />
-         <Label layoutX="125.0" layoutY="378.0" prefHeight="17.0" prefWidth="594.0" text="Pour réserver un terrain, veuillez ecrivez votre Email e sélectionner Date et Heure">
+         <Label layoutX="125.0" layoutY="378.0" prefHeight="17.0" prefWidth="594.0" text="Pour réserver un terrain, veuillez ecrivez votre Email et sélectionner Date et Heure">
             <font>
                <Font name="Arial Rounded MT Bold" size="14.0" />
             </font>

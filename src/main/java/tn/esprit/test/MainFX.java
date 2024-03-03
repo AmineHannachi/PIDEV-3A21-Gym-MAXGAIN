@@ -11,7 +11,7 @@ import java.io.IOException;
 public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) {
-        FXMLLoader loader= new FXMLLoader(getClass().getResource("/mainForm.fxml"));
+        FXMLLoader loader= new FXMLLoader(getClass().getResource("/gestionCours.fxml"));
 
         try {
             Parent root   = loader.load();

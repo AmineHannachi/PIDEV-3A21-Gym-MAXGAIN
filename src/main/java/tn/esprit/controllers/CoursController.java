@@ -104,8 +104,11 @@ ResultSet rs;
             if (newSelection != null) {
                 cours selectedUser = newSelection;
 
-                //idC.setText(String.valueOf(selectedUser.setId(rs.getInt("id"))));
+                idC.setText(String.valueOf(selectedUser.getId()));
                 type.setText(selectedUser.getType());
+
+                nomSalle.setValue(selectedUser.getSalle().getNom());
+
 
             }
         });
@@ -145,7 +148,8 @@ ResultSet rs;
     void clearTextFields() {
         idC.setText("");
         type.setText("");
-        nomSalle.setItems(FXCollections.observableArrayList("Max Gain Lac", "Max Gain Naser", "Max Gain Boumhal", "Max Gain Centre Urbain", "Max Gain Ariana"));
+//        nomSalle.setItems(FXCollections.observableArrayList("Max Gain Lac", "Max Gain Naser", "Max Gain Boumhal", "Max Gain Centre Urbain", "Max Gain Ariana"));
+        nomSalle.getSelectionModel().select(-1);
 
     }
 
@@ -157,7 +161,7 @@ ResultSet rs;
         alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Message d'information");
         alert.setHeaderText(null);
-        alert.setContentText("Ajouté avec succès!");
+        alert.setContentText("supprimer avec succès!");
         alert.showAndWait();
         tableReadAll();
         clearTextFields();
@@ -165,28 +169,39 @@ ResultSet rs;
 
     @FXML
     void updateC(ActionEvent event) {
+        // Récupérer la valeur sélectionnée du ComboBox nomSalle
+        String nomSalleText = null;
+        if (nomSalle.getSelectionModel().getSelectedItem() != null) {
+            nomSalleText = nomSalle.getSelectionModel().getSelectedItem();
+        } else {
+            // Gérer le cas où aucune salle n'est sélectionnée
+            System.err.println("Aucune salle sélectionnée.");
+            // Affichez un message d'erreur à l'utilisateur ou prenez une autre action nécessaire.
+            return; // Sortir de la méthode si aucune salle n'est sélectionnée
+        }
 
-        String nomSalleText = nomSalle.getSelectionModel().getSelectedItem().toString();
+        // À ce stade, une salle est sélectionnée
+        // Vous pouvez continuer avec le reste de votre code comme avant
         CoursService c = new CoursService();
         SalleService ss = new SalleService();
 
-            try {
+        try {
+            int idSalle = ss.obtenirIdSalle(nomSalleText);
+            c.Update(new cours(Integer.parseInt(idC.getText()), type.getText(), idSalle));
+            System.out.println("modification ajouté avec succès !");
 
-                int idSalle = ss.obtenirIdSalle(nomSalleText);
-                c.Update(new cours(Integer.parseInt(idC.getText()),type.getText(), idSalle));
-                System.out.println("modification ajouté avec succès !");
-            } catch (Exception e) {
-                System.err.println("Erreur lors de modification du cours : " + e.getMessage());
-                // Affichez un message d'erreur à l'utilisateur s'il y a un problème
-            }
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Message d'information");
+            alert.setHeaderText(null);
+            alert.setContentText("modifié avec succès!");
+            alert.showAndWait();
 
-        alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Message d'information");
-        alert.setHeaderText(null);
-        alert.setContentText("Ajouté avec succès!");
-        alert.showAndWait();
-        tableReadAll();
-        clearTextFields();
+            tableReadAll();
+            clearTextFields();
+        } catch (Exception e) {
+            System.err.println("Erreur lors de modification du cours : " + e.getMessage());
+            // Affichez un message d'erreur à l'utilisateur s'il y a un problème
+        }
     }
 
     @FXML

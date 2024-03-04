@@ -17,6 +17,15 @@ public class User  {
     private String email;
     private String gender;
     private String confirmPass;
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
+   }
+
     private int phone;
     private byte[] salt;
 

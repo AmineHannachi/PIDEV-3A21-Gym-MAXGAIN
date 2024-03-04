@@ -44,13 +44,6 @@ public class User  {
         this.salt = salt;
     }
 
-    public byte[] getSalt() {
-        return salt;
-    }
-
-    public void setSalt(byte[] salt) {
-        this.salt = salt;
-    }
 
     public Long getId() {
         return id;

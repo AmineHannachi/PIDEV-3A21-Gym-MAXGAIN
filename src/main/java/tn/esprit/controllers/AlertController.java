@@ -10,11 +10,9 @@ import tn.esprit.entities.User;
 import tn.esprit.services.UserService;
 
 import java.net.URL;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ResourceBundle;
-
 
 public class AlertController implements Initializable {
 
@@ -42,29 +40,20 @@ public class AlertController implements Initializable {
     @FXML
     private TextField usernameField;
 
-    private User user;
+    private User user; // Utilisateur à mettre à jour
     private UserService userService;
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
+    // Méthode pour initialiser le contrôleur
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Pré-remplir les champs avec les informations de l'utilisateur s'il s'agit d'une mise à jour
         if (user != null) {
-            // Remplir les champs avec les informations de l'utilisateur
             usernameField.setText(user.getUsername());
             emailField.setText(user.getEmail());
-            // Vérifier si la date de naissance n'est pas null avant de l'assigner
             if (user.getBirthdate() != null) {
                 LocalDate birthdate = user.getBirthdate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 birthdatePicker.setValue(birthdate);
             }
-
             if ("Male".equals(user.getGender())) {
                 maleRadio.setSelected(true);
             } else {
@@ -74,7 +63,17 @@ public class AlertController implements Initializable {
         }
     }
 
+    // Méthode pour définir l'utilisateur à mettre à jour
+    public void setUser(User user) {
+        this.user = user;
+    }
 
+    // Méthode pour définir le service utilisateur
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    // Gestionnaire d'événements pour le bouton "Annuler"
     @FXML
     void cancel(ActionEvent event) {
         // Fermer la fenêtre d'alerte
@@ -82,27 +81,36 @@ public class AlertController implements Initializable {
         stage.close();
     }
 
+    // Gestionnaire d'événements pour le bouton "Enregistrer"
     @FXML
     void save(ActionEvent event) {
         // Récupérer les valeurs des champs
-        String oldUsername = user.getUsername(); // Ancien nom d'utilisateur
         String newUsername = usernameField.getText();
         String newEmail = emailField.getText();
         LocalDate newBirthdate = birthdatePicker.getValue();
         String newGender = maleRadio.isSelected() ? "Male" : "Female";
         int newPhone = Integer.parseInt(phoneField.getText());
-        String newPassword = ""; // Assumer que le mot de passe n'est pas modifié pour l'instant
 
-        // Créer un nouvel utilisateur avec les valeurs mises à jour et le rôle par défaut "Client"
+        // Créer un nouvel utilisateur avec les valeurs mises à jour
         java.sql.Date newBirthdateSql = java.sql.Date.valueOf(newBirthdate);
-        User newUser = new User(newUsername, newEmail, newBirthdateSql,
-                newGender, newPhone, Role.CLIENT);
+        User newUser = new User(newUsername, newEmail, newBirthdateSql, newGender, newPhone, Role.CLIENT);
 
-        // Appeler le service pour mettre à jour l'utilisateur dans la base de données
-        userService.update(oldUsername, newUser);
+        // Si l'utilisateur existe, il s'agit d'une mise à jour
+        if (user != null) {
+            // Appeler le service pour mettre à jour l'utilisateur dans la base de données
+            userService.update(user.getUsername(), newUser);
+        } else {
+            // Sinon, il s'agit d'un nouvel utilisateur, donc ajouter
+            userService.add(newUser);
+        }
 
         // Fermer la fenêtre d'alerte
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
+    }
+
+    // Méthode pour définir l'utilisateur à mettre à jour
+    public void setUserToUpdate(User userToUpdate) {
+        this.user = userToUpdate;
     }
 }

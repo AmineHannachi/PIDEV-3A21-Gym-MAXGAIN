@@ -13,19 +13,19 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import tn.esprit.entities.Role;
-import tn.esprit.services.PasswordHashing;
+
+import tn.esprit.services.JWTUtil;
+import tn.esprit.services.SessionManager;
+import tn.esprit.services.UserService;
 import tn.esprit.utilis.DataSource;
-import tn.esprit.services.PasswordHashing;
-import tn.esprit.repositories.UserRepository;
-import tn.esprit.entities.User;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
+
+import static tn.esprit.entities.Role.*;
 
 public class LoginController implements Initializable {
     @FXML
@@ -78,10 +78,12 @@ public class LoginController implements Initializable {
     private CheckBox pass_show;
 
     private AlertMessage alert = new AlertMessage();
+    private UserService userService = new UserService();
     @FXML
     private Label MG;
     @FXML
     private Label mg;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Appliquer l'effet DropShadow à MG lors de l'initialisation
@@ -91,26 +93,27 @@ public class LoginController implements Initializable {
         // Définir le comportement lorsque la souris entre dans le nœud MG
         MG.setOnMouseEntered(event -> {
             if (event.getSource() == MG) {
-                DropShadow shadow1 =new DropShadow(40,Color.valueOf("#509dea"));
+                DropShadow shadow1 = new DropShadow(40, Color.valueOf("#509dea"));
                 shadow1.setRadius(50);
                 MG.setEffect(shadow1);
                 MG.setStyle("-fx-text-fill: #509dea");
             }
         });
         MG.setOnMouseExited(event -> {
-        if (event.getSource() == MG) {
-            DropShadow shadow1 = new DropShadow(30, Color.valueOf("#509dea"));
-            shadow1.setRadius(20);
-            MG.setEffect(shadow1);
-            MG.setStyle("-fx-text-fill: #141E30");
-        }});
+            if (event.getSource() == MG) {
+                DropShadow shadow1 = new DropShadow(30, Color.valueOf("#509dea"));
+                shadow1.setRadius(20);
+                MG.setEffect(shadow1);
+                MG.setStyle("-fx-text-fill: #141E30");
+            }
+        });
         DropShadow shadow2 = new DropShadow(20, Color.valueOf("#509dea"));
         mg.setEffect(shadow2);
 
         // Définir le comportement lorsque la souris entre dans le nœud MG
         mg.setOnMouseEntered(event -> {
             if (event.getSource() == mg) {
-                DropShadow shadow1 =new DropShadow(40,Color.valueOf("#509dea"));
+                DropShadow shadow1 = new DropShadow(40, Color.valueOf("#509dea"));
                 shadow1.setRadius(50);
                 mg.setEffect(shadow1);
                 mg.setStyle("-fx-text-fill: #509dea");
@@ -122,7 +125,8 @@ public class LoginController implements Initializable {
                 shadow1.setRadius(20);
                 mg.setEffect(shadow1);
                 mg.setStyle("-fx-text-fill: #141E30");
-            }});
+            }
+        });
         // Vérifier si role n'est pas null avant de le configurer
         if (role != null) {
             role.setItems(FXCollections.observableArrayList(Role.values()));
@@ -137,63 +141,50 @@ public class LoginController implements Initializable {
 
     @FXML
     public void loginAccount() {
-        if (login_username.getText().isEmpty() || login_password.getText().isEmpty()) {
+        String username = login_username.getText();
+        String password = login_password.getText();
+
+        if (username.isEmpty() || password.isEmpty()) {
             alert.errorMessage("Please fill all blank fields");
+            return;
+        }
+
+        if (userService.authenticateUser(username, password)) {
+            String jwt = JWTUtil.generateJWT(username);
+            SessionManager.setJWT(jwt);
+
+            Role userRole = userService.getUserRole(username);
+            redirectToView(userRole);
         } else {
-            String selectData = "SELECT * FROM user WHERE username = ? AND password = ?";
-            try (Connection connect = DataSource.getInstance().getCnx()) {
-                if (connect != null) { // Vérifier si la connexion est établie avec succès
-                    try (PreparedStatement prepare = connect.prepareStatement(selectData)) {
-                        prepare.setString(1, login_username.getText());
-                        prepare.setString(2, login_password.getText());
-                        try (ResultSet result = prepare.executeQuery()) {
-                            if (result.next()) {
-                                String userRole = result.getString("role");
-                                Role role = Role.valueOf(userRole.toUpperCase());
-                                switch (role) {
-                                    case ADMIN:
-                                        redirectToAdminView();
-                                        break;
-                                    case CLIENT:
-                                        redirectToClientView();
-                                        break;
-                                    case COACH:
-                                        redirectToCoachView();
-                                        break;
-                                    default:
-                                        alert.errorMessage("User role not recognized");
-                                }
-                            } else {
-                                alert.errorMessage("Incorrect Username/Password");
-                            }
-                        }
-                    }
-                } else {
-                    alert.errorMessage("Failed to establish database connection");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            alert.errorMessage("Incorrect Username/Password");
+        }
+    }
+
+    private void redirectToView(Role role) {
+        if (role != null) {
+            switch (role) {
+                case ADMIN:
+                    loadView("/Home.fxml");
+                    break;
+                case CLIENT:
+                    loadView("/EspaceClient.fxml");
+                    break;
+                case COACH:
+                    loadView("/EspaceCoach.fxml");
+                    break;
+                default:
+                    alert.errorMessage("User role not recognized: " + role);
             }
+        } else {
+            alert.errorMessage("User role is null");
         }
     }
 
 
-    private void redirectToAdminView() {
-        loadView("/EspaceAdmin.fxml");
-    }
-
-    private void redirectToClientView() {
-        loadView("/EspaceClient.fxml");
-    }
-
-    private void redirectToCoachView() {
-        loadView("/EspaceCoach.fxml");
-    }
-
     private void loadView(String fxmlPath) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-            Stage stage = (Stage) btn_login.getScene().getWindow(); // Récupérer la fenêtre actuelle
+            Stage stage = (Stage) btn_login.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
         } catch (IOException e) {
@@ -201,6 +192,36 @@ public class LoginController implements Initializable {
             alert.errorMessage("Error loading view");
         }
     }
+
+
+    @FXML
+    public void showPassword() {
+        if (pass_show.isSelected()) {
+            // Afficher le mot de passe
+            login_password.setPromptText(login_password.getText());
+            login_password.setText("");
+        } else {
+            // Masquer le mot de passe
+            login_password.setText(login_password.getPromptText());
+            login_password.setPromptText("");
+        }
+    }
+
+    @FXML
+    public void redirectToRegisterView() {
+        loadView("/Register.fxml");
+    }
+
+    @FXML
+    public void redirectToLoginView() {
+        loadView("/Login.fxml");
+    }
+
+    @FXML
+    public void redirectToPasswordResetView() {
+        loadView("/PasswordReset.fxml");
+    }
+
 
     private boolean validatePasswordsMatch() {
         return password.getText().equals(confirmPass.getText());
@@ -214,32 +235,24 @@ public class LoginController implements Initializable {
             return;
         }
 
-        try {
-            Connection connect = DataSource.getInstance().getCnx();
-            String insertData = "INSERT INTO user (username, password, email, phone, gender, birthdate, role, salt) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement prepare = connect.prepareStatement(insertData);
-            prepare.setString(1, username.getText());
+        try (Connection connect = DataSource.getInstance().getCnx()) {
+            String insertData = "INSERT INTO user (username, password, email, phone, gender, birthdate, role) " +
+                    "VALUES ('" + username.getText() + "', '" + password.getText() +
+                    "', '" + email.getText() + "', '" + phone.getText() + "', '" +
+                    (male.isSelected() ? "Male" : "Female") + "', '" + java.sql.Date.valueOf(birthDatePicker.getValue()) +
+                    "', '" + role.getValue().toString() + "')";
 
-            // Générer le sel
-            byte[] salt = PasswordHashing.generateSalt();
-
-            // Hasher le mot de passe avant de le stocker
-            String hashedPassword = PasswordHashing.hashPassword(password.getText(), salt);
-            prepare.setString(2, hashedPassword);
-
-            prepare.setString(3, email.getText());
-            prepare.setString(4, phone.getText());
-            prepare.setString(5, male.isSelected() ? "Male" : "Female");
-            prepare.setDate(6, java.sql.Date.valueOf(birthDatePicker.getValue()));
-            prepare.setString(7, role.getValue().toString());
-            prepare.setBytes(8, salt); // Enregistrer le sel dans la base de données
-            prepare.executeUpdate();
-            alert.successMessage("Registered successfully!");
-        } catch (SQLException | NoSuchAlgorithmException e) {
+            try (Statement statement = connect.createStatement()) {
+                statement.executeUpdate(insertData);
+                alert.successMessage("Registered successfully!");
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
             alert.errorMessage("Registration failed. Please try again later.");
         }
     }
+
+
     private String validateFields() {
         StringBuilder errorMessage = new StringBuilder();
 
@@ -304,53 +317,13 @@ public class LoginController implements Initializable {
         }
         return userExists;
     }
-    @FXML
-    public void showPassword() {
-        if (pass_show.isSelected()) {
-            // Afficher le mot de passe
-            login_password.setPromptText(login_password.getText());
-            login_password.setText("");
-        } else {
-            // Masquer le mot de passe
-            login_password.setText(login_password.getPromptText());
-            login_password.setPromptText("");
-        }
-    }
 
 
-    @FXML
-    public void redirectToRegisterView() {
-        // Charger et afficher la vue register.fxml
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Register.fxml"));
-            Stage stage = (Stage) accountLink.getScene().getWindow(); // Récupérer la fenêtre actuelle
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    @FXML
-    public void redirectToLoginView() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
-            Stage stage = (Stage) Link.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    @FXML
-    public void redirectToPasswordResetView() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/PasswordReset.fxml"));
-            Stage stage = (Stage)pass_forget.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
+
+
+
+
+
 }

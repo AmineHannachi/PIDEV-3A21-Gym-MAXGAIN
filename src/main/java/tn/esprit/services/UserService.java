@@ -146,7 +146,24 @@ public class UserService implements IService<User> {
     }
 
 
+    public boolean authenticateUser(String username, String password) {
+        String query = "SELECT * FROM user WHERE username = ? AND password = ?";
 
+        try (Connection connection = DataSource.getInstance().getCnx();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, username);
+            statement.setString(2, password);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Gérer l'exception selon vos besoins
+            return false;
+        }
+    }
 
     @Override
     public List<User> readAll() {
@@ -207,6 +224,29 @@ public class UserService implements IService<User> {
         }
         return clients;
     }
+
+
+    public Role getUserRole(String username) {
+        Role role = null;
+        String query = "SELECT Role FROM user WHERE username = ?";
+        try (Connection connection = DataSource.getInstance().getCnx();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, username);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    String roleString = resultSet.getString("Role");
+                    // Assurez-vous que le rôle récupéré est en majuscules pour correspondre à l'enum Role
+                    role = Role.valueOf(roleString.toUpperCase());
+                }
+            }
+        } catch (SQLException e) {
+            // Affichez les détails de l'erreur
+            e.printStackTrace();
+        }
+        return role;
+    }
+
+
 
 
 

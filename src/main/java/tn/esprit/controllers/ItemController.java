@@ -79,9 +79,8 @@ public class ItemController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        userService = new UserService(); // Initialisation du service client
+        userService = new UserService();
     }
-
 
 
     @FXML
@@ -92,7 +91,7 @@ public class ItemController implements Initializable {
                 Parent alertRoot = fxmlLoader.load(); // Déclarez alertRoot comme Parent
                 AlertController alertController = fxmlLoader.getController();
                 alertController.setUser(user);
-                alertController.setUserService(userService);
+                alertController.setUserService(userService); // Passer l'instance existante de UserService
 
                 Stage stage = new Stage();
                 stage.setScene(new Scene(alertRoot));
@@ -105,6 +104,7 @@ public class ItemController implements Initializable {
             alert.errorMessage("No client selected !");
         }
     }
+
 
 
     @FXML

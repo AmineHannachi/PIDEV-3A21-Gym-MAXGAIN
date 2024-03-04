@@ -1,15 +1,15 @@
 package tn.esprit.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import tn.esprit.services.EmailSender;
 import tn.esprit.services.PasswordResetService;
@@ -19,87 +19,102 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PasswordResetController implements Initializable {
-
     @FXML
     private Hyperlink back;
 
     @FXML
-    private Button btn_submit;
+    private Button btn_enter;
 
     @FXML
-    private TextField email_ver;
+    private TextField codeField;
+
 
     @FXML
-    private AnchorPane login_form;
+    private TextField emailField;
 
-    private final PasswordResetService passwordResetService = new PasswordResetService();
-    private final AlertMessage alert = new AlertMessage(); // Instance de la classe utilitaire AlertMessage
 
     @FXML
-    public void handlePasswordReset() {
-        String userEmail = email_ver.getText();
-        if (!isValidEmail(userEmail)) {
-            alert.errorMessage("Invalid email address. Please enter a valid email address.");
+    private Button sendCodeButton;
+
+    private PasswordResetService passwordResetService;
+
+    public PasswordResetController() {
+        passwordResetService = new PasswordResetService();
+    }
+
+    @FXML
+    void handleSendVerificationCode(ActionEvent event) {
+        String email = emailField.getText();
+        if (email.isEmpty()) {
+            showAlert("Please enter your email.");
             return;
         }
 
-        if (passwordResetService.initiatePasswordReset(userEmail)) {
-            alert.successMessage("A verification code has been sent to your email address.");
+        // Initiate password reset process
+        boolean result = passwordResetService.initiatePasswordReset(email);
+        if (result) {
+            // Redirect to verification code page
+            redirectToVerificationCodePage();
         } else {
-            alert.errorMessage("An error occurred while resetting the password. Please try again.");
+            showAlert("Failed to send verification code. Please try again.");
         }
     }
 
-    private boolean isValidEmail(String email) {
-        // Ajouter votre logique de validation d'e-mail ici
-        return email != null && !email.isEmpty(); // Exemple simple de validation
-    }
-
-    @FXML
-    public void redirectToLoginView() {
-        loadScene("/Login.fxml", back);
-    }
-
-    @FXML
-    private void handleVerificationCodeSending() {
-        String userEmail = email_ver.getText();
-        String verificationCode = passwordResetService.generateVerificationCode();
-        sendVerificationCodeByEmail(userEmail, verificationCode);
-    }
-
-    @FXML
-    private void redirectToVerificationCodeView() {
-        loadScene("/VerificationCode.fxml", btn_submit);
-    }
-
-    private void sendVerificationCodeByEmail(String email, String verificationCode) {
-        // Envoyer le code de vérification par e-mail à l'utilisateur
-        String subject = "Verification Code for Password Reset";
-        String body = "Your verification code is: " + verificationCode;
-
+    private void redirectToVerificationCodePage() {
         try {
-            EmailSender.sendEmail(email, subject, body);
-            alert.successMessage("The verification email has been sent successfully.");
-            redirectToVerificationCodeView();
-        } catch (Exception e) {
-            alert.errorMessage("Error: The verification email could not be sent.");
-            e.printStackTrace();
-        }
-    }
+            Parent verificationCodeParent = FXMLLoader.load(getClass().getResource("/VerificationCode.fxml"));
 
-    private void loadScene(String fxmlFile, Node node) {
-        Stage stage = (Stage) node.getScene().getWindow();
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            Scene verificationCodeScene = new Scene(verificationCodeParent);
+            Stage stage = (Stage) sendCodeButton.getScene().getWindow(); // Get the current stage
+            stage.setScene(verificationCodeScene);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        btn_submit.setOnAction(event -> handleVerificationCodeSending());
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Password Reset");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        passwordResetService = new PasswordResetService();
+    }
+    @FXML
+    void handleVerifyCode(ActionEvent event) {
+        String code = codeField.getText();
+        String email = emailField.getText();
+        if (email.isEmpty() || code.isEmpty()) {
+            showAlert("Please enter both your email and the verification code.");
+            return;
+        }
+
+        // Vérifier le code de vérification
+        boolean isValid = passwordResetService.verifyVerificationCode(email, code);
+        if (isValid) {
+            // Rediriger vers la page de réinitialisation du mot de passe
+            redirectToChangePasswordPage();
+        } else {
+            showAlert("Invalid verification code. Please try again.");
+        }
+    }
+
+    private void redirectToChangePasswordPage() {
+        // Redirection vers la page de réinitialisation du mot de passe
+        try {
+            Parent passwordResetParent = FXMLLoader.load(getClass().getResource("/ChangePassword.fxml"));
+            Scene passwordResetScene = new Scene(passwordResetParent);
+            Stage stage = (Stage) btn_enter.getScene().getWindow(); // Get the current stage
+            stage.setScene(passwordResetScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

@@ -14,11 +14,12 @@
             <children>
                 <AnchorPane layoutX="480.0" layoutY="3.0" prefHeight="600.0" prefWidth="427.0" style="-fx-border-color: #2f6094;">
                     <children>
-                        <Button fx:id="btn_enter" layoutX="96.0" layoutY="280.0" mnemonicParsing="false"  prefHeight="39.0" prefWidth="177.0" styleClass="login-button" stylesheets="@login.css" text="enter">
+                        <Button fx:id="btn_enter" layoutX="125.0" layoutY="369.0" mnemonicParsing="false" onAction="#handleVerifyCode" prefHeight="39.0" prefWidth="177.0" styleClass="login-button" stylesheets="@login.css" text="enter">
                             <font>
                                 <Font name="Berlin Sans FB" size="18.0" />
                             </font>
                         </Button>
+
                         <Hyperlink fx:id="back" layoutX="185.0" layoutY="517.0" prefHeight="26.0" prefWidth="46.0" text="Back" textAlignment="CENTER" textFill="#f0f4f2" underline="true">
                             <font>
                                 <Font name="System Bold" size="14.0" />
@@ -32,16 +33,26 @@
                                 <Bloom />
                             </effect>
                         </Label>
-                        <TextField fx:id="code" layoutX="130.0" layoutY="198.0" prefHeight="28.0" prefWidth="168.0" promptText="Enter the code" styleClass="sign_up" stylesheets="@login.css">
+                        <TextField fx:id="emailField" layoutX="130.0" layoutY="198.0" prefHeight="28.0" prefWidth="168.0" promptText="Enter the email" styleClass="sign_up" stylesheets="@login.css">
                             <font>
                                 <Font name="Microsoft Sans Serif" size="13.0" />
                             </font>
                         </TextField>
-                        <Label layoutX="27.0" layoutY="212.0" prefHeight="20.0" prefWidth="76.0" styleClass="sign_up" stylesheets="@login.css" text="Code" textFill="#e9eae3">
+                        <Label layoutX="27.0" layoutY="212.0" prefHeight="20.0" prefWidth="76.0" styleClass="sign_up" stylesheets="@login.css" text="Email" textFill="#e9eae3">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </Label>
+                  <TextField fx:id="codeField" layoutX="130.0" layoutY="264.0" prefHeight="28.0" prefWidth="168.0" promptText="Enter the code" styleClass="sign_up" stylesheets="@login.css">
+                     <font>
+                        <Font name="Microsoft Sans Serif" size="13.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="39.0" layoutY="282.0" prefHeight="20.0" prefWidth="76.0" styleClass="sign_up" stylesheets="@login.css" text="Code" textFill="#e9eae3">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
                     </children>
                 </AnchorPane>
             </children>

@@ -1,8 +1,5 @@
 package tn.esprit.test;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import tn.esprit.services.EmailSender;
-
 import tn.esprit.services.UserService;
 import tn.esprit.utilis.DataSource;
 

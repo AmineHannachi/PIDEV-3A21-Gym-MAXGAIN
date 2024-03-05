@@ -14,7 +14,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import tn.esprit.entities.Role;
 import tn.esprit.services.EmailService;
+import tn.esprit.services.JWTUtil;
 import tn.esprit.services.PasswordHashing;
+import tn.esprit.services.SessionManager;
 import tn.esprit.utilis.DataSource;
 import java.io.IOException;
 import java.net.URL;
@@ -146,21 +148,13 @@ public class LoginController implements Initializable {
                     try (Statement statement = connect.createStatement()) {
                         try (ResultSet result = statement.executeQuery(selectData)) {
                             if (result.next()) {
+                                String username = result.getString("username");
+                                String jwt = JWTUtil.generateJWT(username);
+                                SessionManager.setJWT(jwt);
+
                                 String userRole = result.getString("role");
                                 Role role = Role.valueOf(userRole.toUpperCase());
-                                switch (role) {
-                                    case ADMIN:
-                                        redirectToAdminView();
-                                        break;
-                                    case CLIENT:
-                                        redirectToClientView();
-                                        break;
-                                    case COACH:
-                                        redirectToCoachView();
-                                        break;
-                                    default:
-                                        alert.errorMessage("User role not recognized");
-                                }
+                                redirectToView(role);
                             } else {
                                 alert.errorMessage("Incorrect Username/Password");
                             }
@@ -175,6 +169,21 @@ public class LoginController implements Initializable {
         }
     }
 
+    private void redirectToView(Role userRole) {
+        switch (userRole) {
+            case ADMIN:
+                redirectToAdminView();
+                break;
+            case CLIENT:
+                redirectToClientView();
+                break;
+            case COACH:
+                redirectToCoachView();
+                break;
+            default:
+                alert.errorMessage("User role not recognized");
+        }
+    }
 
 
     private void redirectToAdminView() {

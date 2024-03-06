@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CalorieCalculatorController">
+    <children>
+        <VBox alignment="CENTER" spacing="10.0" layoutX="50.0" layoutY="30.0">
+            <Label text="Calculateur de Besoins Énergétiques" />
+
+            <Label text="Age" />
+            <TextField fx:id="ageTextField" />
+
+            <Label text="Sexe" />
+            <RadioButton fx:id="hommeRadioButton" text="Homme" toggleGroup="$genderToggleGroup" />
+            <RadioButton fx:id="femmeRadioButton" text="Femme" toggleGroup="$genderToggleGroup" />
+
+            <Label text="La Taille (Cm)" />
+            <TextField fx:id="tailleTextField" />
+
+            <Label text="Poids (Kg)" />
+            <TextField fx:id="poidsTextField" />
+
+            <Label text="Objectif" />
+            <RadioButton fx:id="perdrePoidsRadioButton" text="Perdre de poids" toggleGroup="$goalToggleGroup" />
+            <RadioButton fx:id="maintenanceRadioButton" text="Maintenance" toggleGroup="$goalToggleGroup" />
+            <RadioButton fx:id="priseMasseRadioButton" text="Prise de masse" toggleGroup="$goalToggleGroup" />
+
+            <Label text="Niveau d'activité" />
+            <RadioButton fx:id="legereActiviteRadioButton" text="Légèrement actif" toggleGroup="$activityLevelToggleGroup" />
+            <RadioButton fx:id="modereeActiviteRadioButton" text="Modérément actif" toggleGroup="$activityLevelToggleGroup" />
+            <RadioButton fx:id="tresActifRadioButton" text="Très actif" toggleGroup="$activityLevelToggleGroup" />
+            <RadioButton fx:id="extraActifRadioButton" text="Extra actif" toggleGroup="$activityLevelToggleGroup" />
+
+            <Label text="Résultat" />
+            <TextField fx:id="resultTextField" />
+
+            <HBox spacing="10.0">
+                <Button fx:id="calculateButton" mnemonicParsing="false" onAction="#calculateCalories" text="Calculer" />
+                <Button fx:id="resetButton" mnemonicParsing="false" onAction="#resetForm" text="Réinitialiser" />
+            </HBox>
+
+            <Label fx:id="resultLabel" text="" />
+        </VBox>
+    </children>
+</AnchorPane>

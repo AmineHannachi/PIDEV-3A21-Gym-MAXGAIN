@@ -2,15 +2,14 @@
     -fx-background-color: #EAEEF4;
 }
 
-
 .side_ankerpane {
     -fx-background-color: linear-gradient(to bottom right, #141E30, #243B55);
     -fx-border-width: 2px;
-    -fx-border-color: #004080; /* Couleur de la bordure */
+    -fx-border-color: #004080;
     -fx-border-style: solid;
-    -fx-padding: 10px; /* Espacement intérieur */
-    -fx-border-radius: 10px; /* Arrondi des bords de la bordure */
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-padding: 10px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.0, 0, 1);
 }
 
 .nav-btn {
@@ -23,59 +22,9 @@
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
     -fx-border-width: 1px;
-    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.5), 0,0,0,1);
+    -fx-text-alignment: left;
 }
-.button-add {
-    -fx-background-color: #4CAF50; /* Couleur de fond */
-    -fx-text-fill: white; /* Couleur du texte */
-    -fx-font-size: 14px; /* Taille de la police */
-    -fx-font-weight: bold; /* Gras */
-    -fx-padding: 8px 16px; /* Espacement entre le texte et les bords du bouton */
-    -fx-border-radius: 5px; /* Rayon des coins */
-}
-
-.button-add:hover {
-    -fx-background-color: #45a049; /* Couleur de fond au survol */
-}
-.button-update {
-    -fx-background-color: #2196F3; /* Couleur de fond */
-    -fx-text-fill: white; /* Couleur du texte */
-    -fx-font-size: 14px; /* Taille de la police */
-    -fx-font-weight: bold; /* Gras */
-    -fx-padding: 8px 16px; /* Espacement entre le texte et les bords du bouton */
-    -fx-border-radius: 5px; /* Rayon des coins */
-}
-
-.button-update:hover {
-    -fx-background-color: #1976D2; /* Couleur de fond au survol */
-}
-.button-delete {
-    -fx-background-color: #F44336; /* Couleur de fond */
-    -fx-text-fill: white; /* Couleur du texte */
-    -fx-font-size: 14px; /* Taille de la police */
-    -fx-font-weight: bold; /* Gras */
-    -fx-padding: 8px 16px; /* Espacement entre le texte et les bords du bouton */
-    -fx-border-radius: 5px; /* Rayon des coins */
-}
-
-.button-delete:hover {
-    -fx-background-color: #D32F2F; /* Couleur de fond au survol */
-}
-.button-logout {
-    -fx-background-color: #607D8B; /* Couleur de fond */
-    -fx-text-fill: white; /* Couleur du texte */
-    -fx-font-size: 12px; /* Taille de la police */
-    -fx-font-weight: bold; /* Gras */
-    -fx-padding: 5px 10px; /* Espacement entre le texte et les bords du bouton */
-    -fx-border-radius: 50px; /* Rayon des coins */
-
-}
-
-.button-logout:hover {
-    -fx-background-color: #546E7A; /* Couleur de fond au survol */
-}
-
-
 
 .nav-btn:hover {
     -fx-background-color: #fff;
@@ -87,147 +36,58 @@
     -fx-text-fill: #fff;
 }
 
-.circle-image {
-    -fx-background-radius: 50%;
-    -fx-background-color: white;
-    -fx-border-radius: 50%;
-    -fx-border-color: black;
-    -fx-border-width: 2px;
-}
-
-.inner_pane {
-    -fx-background-color: #26BFE7;
-    -fx-border-width: 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-    -fx-border-style: solid;
-    -fx-border-color: #26BFE7;
-}
-
-.nb_client {
-    -fx-background-color: #87ceeb;
-    -fx-border-width: 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 0 50 50 50;
-}
-
-.nb_client1 {
-    -fx-background-color: #d3d3d3;
-    -fx-border-width: 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 0 50 50 50;
-}
-
-.nb_client2 {
-    -fx-background-color: #d8bfd8;
-    -fx-border-width: 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 0 50 50 50;
-}
-
-.btn_edit {
+.button-add {
     -fx-background-color: #4CAF50;
-    -fx-background-radius: 50em;
-    -fx-min-width: 27px;
-    -fx-min-height: 27px;
-    -fx-max-width: 27px;
-    -fx-max-height: 27px;
-    -fx-padding: 27px;
-    -fx-border-radius: 50em;
-    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-border-radius: 5px;
 }
 
-.btn_delete {
-    -fx-background-color: #FF5733;
-    -fx-background-radius: 50em;
-    -fx-min-width: 27px;
-    -fx-min-height: 27px;
-    -fx-max-width: 27px;
-    -fx-max-height: 27px;
-    -fx-padding: 20px;
-    -fx-border-radius: 50em;
-    -fx-border-color: transparent;
+.button-add:hover {
+    -fx-background-color: #45a049;
 }
 
-.button .icon {
-    -fx-fill: white;
+.button-update {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-border-radius: 5px;
 }
 
-.most_inner_pane {
-    -fx-background-color: #6780E2;
-    -fx-border-width: 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-    -fx-border-style: solid;
-    -fx-border-color: #748CF1;
+.button-update:hover {
+    -fx-background-color: #1976D2;
 }
 
-.btn_dashboard {
-    -fx-background-color: #F5F5F5;
-    -fx-border-width: 2px;
+.button-delete {
+    -fx-background-color: #F44336;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-border-radius: 5px;
+}
+
+.button-delete:hover {
+    -fx-background-color: #D32F2F;
+}
+
+.button-logout {
+    -fx-background-color: #607D8B;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
     -fx-border-radius: 50px;
-    -fx-background-radius: 50px;
-    -fx-border-style: solid;
-    -fx-border-color: #F5F5F5;
 }
 
-.btn_workbench11 {
-    -fx-background-color: #353A56;
-    -fx-border-width: 2px;
-    -fx-border-radius: 50px;
-    -fx-background-radius: 50px;
-    -fx-border-style: solid;
-    -fx-border-color: #353A56;
+.button-logout:hover {
+    -fx-background-color: #546E7A;
 }
 
-.pane_1 {
-    -fx-background-color: #748CF1;
-    -fx-border-width: 2px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-    -fx-border-style: solid;
-    -fx-border-color: #748CF1;
-}
-
-.progress {
-    -fx-background-color: #ffffff;
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-style: solid;
-    -fx-border-color: #ffffff;
-}
-
-.pane_11 {
-    -fx-background-color: #ffffff;
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-style: solid;
-    -fx-border-color: #ffffff;
-}
-
-.pane_111 {
-    -fx-background-color: #FD9999;
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-style: solid;
-    -fx-border-color: #FD9999;
-}
-
-.pane_1111 {
-    -fx-background-color: #353A56;
-    -fx-border-width: 2px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-border-style: solid;
-    -fx-border-color: #353A56;
-}
 .dach {
     -fx-background-color: linear-gradient(to bottom right, #141E30, #243B55);
-}
-.image {
-    -fx-alignment: center-left;
-    -fx-content-display: left;
 }

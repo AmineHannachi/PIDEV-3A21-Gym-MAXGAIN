@@ -1,5 +1,9 @@
 package controllers;
 
+
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,20 +13,40 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Cell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import models.Abonnement;
 import models.Offres;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import services.AbonnementService;
 import services.OffresService;
+import javafx.scene.control.TableRow;
+import org.apache.poi.ss.usermodel.Row;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import org.apache.poi.ss.usermodel.*;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 public class AjouterAbonnementController {
 
     @FXML
@@ -70,6 +94,7 @@ public class AjouterAbonnementController {
     @FXML
     private TableColumn<Abonnement, String> offreDetailsCol;
 
+
     @FXML
     private Button ajouterAbonnementBtn;
 
@@ -82,7 +107,22 @@ public class AjouterAbonnementController {
     @FXML
     private Button refreshBtn;
     @FXML
+    private Button statisticsButton;
+    @FXML
     private Button ajouterOffreBtn;
+
+    @FXML
+    private RadioButton sortNameRadio;
+
+    @FXML
+    private RadioButton sortSalleRadio;
+
+    @FXML
+    private RadioButton sortOffreRadio;
+    @FXML
+    private Button generateQRCodeBtn;
+
+
 
     private final AbonnementService abonnementService = new AbonnementService();
 
@@ -120,7 +160,13 @@ public class AjouterAbonnementController {
         mpayementCol.setCellValueFactory(new PropertyValueFactory<>("mpayement"));
         dateDCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         offreIdCol.setCellValueFactory(new PropertyValueFactory<>("offreId"));
-        offreDetailsCol.setCellValueFactory(new PropertyValueFactory<>("offer.details"));
+        abonnementIdCol.setVisible(false);
+        offreIdCol.setVisible(false);
+        // Use a Callback to retrieve the offer details from the model
+        offreDetailsCol.setCellValueFactory(cellData -> {
+            Abonnement abonnement = cellData.getValue();
+            return new SimpleStringProperty(abonnement.getOfferDescription());
+        });
 
         abonnementObservableList = FXCollections.observableArrayList();
         affichageAbonnement.setItems(abonnementObservableList);
@@ -177,6 +223,7 @@ public class AjouterAbonnementController {
             String selectedOfferDescription = abonnementOfferComboBox.getValue();
             int offerId = getOfferIdFromDescription(selectedOfferDescription); // Get offer ID from description
             abonnement.setOffreId(offerId);
+
 
             abonnementService.ajouter(abonnement);
             refreshTable();
@@ -247,6 +294,28 @@ public class AjouterAbonnementController {
         }
     }
 
+
+    private void sortAbonnements() {
+        // Get the data from the TableView
+        ObservableList<Abonnement> data = affichageAbonnement.getItems();
+
+        // Sort based on the selected RadioButton
+        if (sortNameRadio.isSelected()) {
+            Collections.sort(data, Comparator.comparing(Abonnement::getName));
+        } else if (sortSalleRadio.isSelected()) {
+            Collections.sort(data, Comparator.comparing(Abonnement::getSalle));
+        } else if (sortOffreRadio.isSelected()) {
+            Collections.sort(data, Comparator.comparing(Abonnement::getOfferDescription));
+        }
+
+        // Set the sorted data back to the TableView
+        affichageAbonnement.setItems(FXCollections.observableArrayList(data));
+    }
+    @FXML
+    public void sortTable(ActionEvent event) {
+        sortAbonnements();
+    }
+
     // You need to implement this method to get the offer label based on the offer ID
     private String getOfferLabelFromId(int offerId) {
         // Implement the logic to get the offer label based on the offer ID
@@ -298,6 +367,47 @@ public class AjouterAbonnementController {
         clearFields();
     }
 
+    private void showAlert(String title, String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void generateQRCode(ActionEvent event) {
+        try {
+            String abonnementDetails = generateAbonnementDetails();
+
+            if (abonnementDetails.isEmpty()) {
+                showAlert("Error", "Abonnement details are empty.", "Please fill in the details before generating a QR code.");
+                return;
+            }
+
+            String filePath = "C:\\Users\\amine\\Desktop\\QR code\\QRCode.png";
+
+            QRCodeWriter qrCodeWriter = new QRCodeWriter();
+            BitMatrix bitMatrix = qrCodeWriter.encode(abonnementDetails, BarcodeFormat.QR_CODE, 300, 300);
+
+            MatrixToImageWriter.writeToPath(bitMatrix, "PNG", Paths.get(filePath));
+            showAlert("QR Code Generated", null, "QR Code has been generated and saved.");
+        } catch (WriterException | IOException e) {
+            showAlert("Error", "Failed to generate QR Code", e.getMessage());
+        }
+    }
+
+
+
+    private String generateAbonnementDetails() {
+        Abonnement selectedAbonnement = affichageAbonnement.getSelectionModel().getSelectedItem();
+        if (selectedAbonnement != null) {
+            return String.format("Name: %s\nEmail: %s\nSalle: %s\nDate: %s",
+                    selectedAbonnement.getName(), selectedAbonnement.getEmail(),
+                    selectedAbonnement.getSalle(), selectedAbonnement.getDate());
+        }
+        return "";
+    }
     @FXML
     private void supprimerAbonnement(ActionEvent event) {
         // Handle the action for deleting an abonnement
@@ -350,4 +460,93 @@ public class AjouterAbonnementController {
             e.printStackTrace(); // Handle the exception according to your needs
         }
     }
-}
+
+
+
+
+    @FXML
+    private void generateExcel(ActionEvent event) {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Abonnement Data");
+
+        // Add headers
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("Name");
+        headerRow.createCell(1).setCellValue("Email");
+        headerRow.createCell(2).setCellValue("Salle");
+        headerRow.createCell(3).setCellValue("Mpayement");
+        headerRow.createCell(4).setCellValue("Date");
+        headerRow.createCell(5).setCellValue("Offre");
+
+        // Add data - assuming Abonnement is the type of your TableView items
+        TableView<Abonnement> tableView = affichageAbonnement;
+        ObservableList<Abonnement> data = tableView.getItems();
+        int rowNum = 1;
+        for (Abonnement abonnement : data) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(abonnement.getName());
+            row.createCell(1).setCellValue(abonnement.getEmail());
+            row.createCell(2).setCellValue(abonnement.getSalle());
+            row.createCell(3).setCellValue(abonnement.getMpayement());
+            row.createCell(4).setCellValue(abonnement.getDate().toString());
+            row.createCell(5).setCellValue(abonnement.getOfferDescription());
+        }
+
+        try {
+            // Specify the file path on your desktop
+            String desktopPath = System.getProperty("user.home") + "\\Desktop\\excel\\";
+            String filePath = desktopPath + "AbonnementData.xlsx";
+
+            // Create directories if they don't exist
+            File directory = new File(desktopPath);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            // Write the workbook content to the specified file
+            FileOutputStream fileOut = new FileOutputStream(filePath);
+            workbook.write(fileOut);
+            fileOut.close();
+            workbook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception as needed
+        }
+    }
+
+
+    @FXML
+    private void openStatisticsInterface(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/StatisticsInterface.fxml"));
+            Parent root = loader.load();
+
+            // Create a new stage for the statistics interface
+            Stage stage = new Stage();
+            stage.setTitle("Statistics");
+            stage.setScene(new Scene(root));
+
+            // Show the statistics interface
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception as needed
+        }
+    }}
+
+
+//       try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterAbonnement.fxml"));
+//            Parent root = loader.load();
+//
+//            // Get the current stage
+//            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+//
+//            // Set the new scene
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);
+//            stage.show();
+//        } catch (IOException e) {
+//            e.printStackTrace(); // Handle the exception according to your needs
+//        }
+//    }

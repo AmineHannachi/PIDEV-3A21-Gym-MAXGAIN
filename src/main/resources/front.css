@@ -1,0 +1,16 @@
+/* styles.css */
+#mainPane {
+    -fx-background-color: #f4f4f4;
+}
+
+.text-field {
+    -fx-pref-width: 200px;
+    -fx-pref-height: 30px;
+}
+
+#effectuerButton {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-pref-width: 100px;
+    -fx-pref-height: 40px;
+}

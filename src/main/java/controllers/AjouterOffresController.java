@@ -4,16 +4,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.Spinner;
+import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import models.Offres;
 import services.OffresService;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.EventObject;
 
 public class AjouterOffresController {
 
@@ -64,6 +71,13 @@ public class AjouterOffresController {
         offresList = FXCollections.observableArrayList();
     }
 
+
+
+    public ObservableList<Offres> getOffresList() {
+        return offresList;
+    }
+
+
     @FXML
     public void initialize() {
         configureTable();
@@ -76,7 +90,7 @@ public class AjouterOffresController {
 
     private void configureTable() {
         offreIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-
+        offreIdCol.setVisible(false);
         prixCol.setCellValueFactory(new PropertyValueFactory<>("prix"));
         dureeCol.setCellValueFactory(new PropertyValueFactory<>("duree"));
         descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -277,4 +291,40 @@ public class AjouterOffresController {
         e.printStackTrace();
         showErrorMessage("Exception", errorMessage + ": " + e.getMessage());
     }
+
+    public void returnnavigat(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterAbonnement.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle the exception according to your needs
+        }
+    }
+    @FXML
+    private void openStatisticsInterface(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/StatisticsInterface.fxml"));
+            Parent root = loader.load();
+
+            // Create a new stage for the statistics interface
+            Stage stage = new Stage();
+            stage.setTitle("Statistics");
+            stage.setScene(new Scene(root));
+
+            // Show the statistics interface
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception as needed
+        }
+    }
 }
+
